@@ -1,1 +1,1 @@
-{"version":3,"file":"userSchema.d.ts","sourceRoot":"","sources":["../../src/zodSchema/userSchema.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,CAAC,MAAM,KAAK,CAAC;AAIzB,eAAO,MAAM,YAAY;;;;iBAIvB,CAAA;AAGF,eAAO,MAAM,YAAY;;;iBAGvB,CAAA"}
+{"version":3,"file":"userSchema.d.ts","sourceRoot":"","sources":["../../src/zodSchema/userSchema.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,CAAC,MAAM,KAAK,CAAC;AAIzB,eAAO,MAAM,YAAY;;;;;iBAKvB,CAAA;AAGF,eAAO,MAAM,YAAY;;;iBAGvB,CAAA"}

@@ -6,6 +6,7 @@ export const signUpSchema = z.object({
     username : z.string(),
     password : z.string(),
     email : z.email(),
+    token : z.string()
 })
 
 

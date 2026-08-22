@@ -18,5 +18,17 @@ model User {
   id           Int       @default(autoincrement()) @id
   userName     String    @unique
   password     String
-  email        String    
+  email        String
+  jobs         Job[]    
+}
+
+
+model Job {
+  id            Int       @default(autoincrement()) @id
+  userId        Int
+  user          User      @relation(fields: [userId] , references: [id])
+  companyName   String
+  role          String
+  referral      Boolean
+  remote        Boolean
 }
