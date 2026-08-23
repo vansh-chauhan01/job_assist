@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { getJobs, createJob } from "../controllers/job.controller.js";
+import { verifyToken } from "../middleWares/isSignedIn.js";
 const router = Router();
-router.get("/", getJobs);
-router.post("/", createJob);
+router.get("/", verifyToken, getJobs);
+router.post("/", verifyToken, createJob);
 export default router;
 //# sourceMappingURL=job.routes.js.map

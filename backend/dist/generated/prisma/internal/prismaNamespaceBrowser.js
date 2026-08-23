@@ -39,7 +39,9 @@ export const JsonNull = runtime.JsonNull;
  */
 export const AnyNull = runtime.AnyNull;
 export const ModelName = {
-    User: 'User'
+    User: 'User',
+    Job: 'Job',
+    Todos: 'Todos'
 };
 /*
  * Enums
@@ -55,6 +57,20 @@ export const UserScalarFieldEnum = {
     userName: 'userName',
     password: 'password',
     email: 'email'
+};
+export const JobScalarFieldEnum = {
+    id: 'id',
+    userId: 'userId',
+    companyName: 'companyName',
+    role: 'role',
+    referral: 'referral',
+    remote: 'remote'
+};
+export const TodosScalarFieldEnum = {
+    id: 'id',
+    title: 'title',
+    userId: 'userId',
+    completed: 'completed'
 };
 export const SortOrder = {
     asc: 'asc',

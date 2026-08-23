@@ -128,6 +128,28 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
     get user(): Prisma.UserDelegate<ExtArgs, {
         omit: OmitOpts;
     }>;
+    /**
+     * `prisma.job`: Exposes CRUD operations for the **Job** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more Jobs
+      * const jobs = await prisma.job.findMany()
+      * ```
+      */
+    get job(): Prisma.JobDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.todos`: Exposes CRUD operations for the **Todos** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more Todos
+      * const todos = await prisma.todos.findMany()
+      * ```
+      */
+    get todos(): Prisma.TodosDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
 }
 export declare function getPrismaClientClass(): PrismaClientConstructor;
 //# sourceMappingURL=class.d.ts.map

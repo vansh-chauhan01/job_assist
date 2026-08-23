@@ -3,6 +3,7 @@ import { signInSchema , signUpSchema } from "../zodSchema/userSchema.js"
 import { prisma } from "../db_init.js"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
+import cloudfare from "../services/cloudfare.js"
 
 export const signUp = async (req : Request , res : Response) =>{
 
@@ -15,19 +16,20 @@ export const signUp = async (req : Request , res : Response) =>{
             })
         }
         const {username , password , email , token} = parsedData.data;
-        const formData = new FormData();
-        formData.append("secret", process.env.CLOUD_SECRET_KEY!);
-        formData.append("response", token);
+        // const formData = new FormData();
+        // formData.append("secret", process.env.CLOUD_SECRET_KEY!);
+        // formData.append("response", token);
 
-        const result = await fetch(
-			"https://challenges.cloudflare.com/turnstile/v0/siteverify",
-			{
-				method: "POST",
-				body: formData,
-			},
-		);
+        // const result = await fetch(
+		// 	"https://challenges.cloudflare.com/turnstile/v0/siteverify",
+		// 	{
+		// 		method: "POST",
+		// 		body: formData,
+		// 	},
+		// );
 
-        const notABot = (await result.json()).success;
+        // const notABot = (await result.json()).success;
+        const notABot = await cloudfare(token);
 
         if(!notABot){
             return res.status(409).json({
@@ -99,12 +101,13 @@ export const signIn = async (req : Request , res : Response) =>{
                 message : "your password is incorrect"
             })
         }
-
+       const { password: _, ...newUser } = currUser;
+       
         const token = jwt.sign({ userId: currUser.id }, process.env.JWT_SECRET!);
         return res.status(200).cookie("access_token" , token, {
             httpOnly : true,
         }).json({
-            currUser
+            newUser
         })
     }catch(e){
         return res.status(500).json({

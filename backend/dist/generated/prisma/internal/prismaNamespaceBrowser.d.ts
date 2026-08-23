@@ -27,6 +27,8 @@ export declare const JsonNull: import("@prisma/client-runtime-utils").JsonNullCl
 export declare const AnyNull: import("@prisma/client-runtime-utils").AnyNullClass;
 export declare const ModelName: {
     readonly User: 'User';
+    readonly Job: 'Job';
+    readonly Todos: 'Todos';
 };
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
 export declare const TransactionIsolationLevel: {
@@ -43,6 +45,22 @@ export declare const UserScalarFieldEnum: {
     readonly email: 'email';
 };
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum];
+export declare const JobScalarFieldEnum: {
+    readonly id: 'id';
+    readonly userId: 'userId';
+    readonly companyName: 'companyName';
+    readonly role: 'role';
+    readonly referral: 'referral';
+    readonly remote: 'remote';
+};
+export type JobScalarFieldEnum = (typeof JobScalarFieldEnum)[keyof typeof JobScalarFieldEnum];
+export declare const TodosScalarFieldEnum: {
+    readonly id: 'id';
+    readonly title: 'title';
+    readonly userId: 'userId';
+    readonly completed: 'completed';
+};
+export type TodosScalarFieldEnum = (typeof TodosScalarFieldEnum)[keyof typeof TodosScalarFieldEnum];
 export declare const SortOrder: {
     readonly asc: 'asc';
     readonly desc: 'desc';

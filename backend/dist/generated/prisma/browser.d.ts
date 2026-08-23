@@ -7,4 +7,14 @@ export * from './enums.js';
  *
  */
 export type User = Prisma.UserModel;
+/**
+ * Model Job
+ *
+ */
+export type Job = Prisma.JobModel;
+/**
+ * Model Todos
+ *
+ */
+export type Todos = Prisma.TodosModel;
 //# sourceMappingURL=browser.d.ts.map

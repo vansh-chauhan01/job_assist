@@ -1,6 +1,7 @@
 import * as z from "zod";
-export declare const creareJobSchema: z.ZodObject<{
-    title: z.ZodString;
+export declare const createJobSchema: z.ZodObject<{
+    companyName: z.ZodString;
+    role: z.ZodString;
     referral: z.ZodBoolean;
     remote: z.ZodBoolean;
 }, z.core.$strip>;

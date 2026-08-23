@@ -20,6 +20,7 @@ model User {
   password     String
   email        String
   jobs         Job[]    
+  todos        Todos[]
 }
 
 
@@ -31,4 +32,14 @@ model Job {
   role          String
   referral      Boolean
   remote        Boolean
+}
+
+//todos -----> todo id ,userID , decription, done
+
+model Todos {
+  id           Int        @default(autoincrement()) @id
+  title        String     
+  userId       Int
+  user         User      @relation(fields: [userId] , references: [id])
+  completed    Boolean   @default(false)
 }
