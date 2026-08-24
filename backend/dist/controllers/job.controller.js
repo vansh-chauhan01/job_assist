@@ -1,6 +1,6 @@
 import { createJobSchema } from "../zodSchema/jobSchem.js";
 import { prisma } from "../db_init.js";
-import client from "../services/redis.js";
+import { getCache, setCache, deleteCache } from "../services/redis.js";
 export const createJob = async (req, res) => {
     try {
         const parsedData = createJobSchema.safeParse(req.body);
@@ -37,20 +37,25 @@ export const createJob = async (req, res) => {
 };
 export const getJobs = async (req, res) => {
     try {
-        await client.set("vansh", "chauhan");
-        const data = await client.get("vansh");
-        console.log(data);
+        const key = `job:${req.user_id}`;
+        const cacheData = await getCache(key);
+        if (cacheData) {
+            // already parsing it in getCache function
+            return res.status(200).json({
+                cacheData
+            });
+        }
         const jobs = await prisma.job.findMany({
             where: {
                 userId: Number(req.user_id)
             }
         });
-        console.log(jobs);
         if (!jobs) {
             return res.status(500).json({
                 message: "couldnt fetch jobs"
             });
         }
+        await setCache(key, jobs, 120);
         return res.status(200).json({
             jobs
         });

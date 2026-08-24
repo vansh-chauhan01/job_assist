@@ -1,7 +1,8 @@
 import type { Request , Response } from "express"
 import { createJobSchema } from "../zodSchema/jobSchem.js"
 import { prisma } from "../db_init.js";
-import client from "../services/redis.js";
+import { getCache , setCache , deleteCache } from "../services/redis.js";
+
 
 
 
@@ -46,6 +47,17 @@ export const createJob = async(req : Request , res : Response) =>{
 
 export const getJobs = async(req : Request , res : Response) =>{
     try{
+        const key = `job:${req.user_id}`
+        const cacheData = await getCache(key);
+
+        if(cacheData){
+            // already parsing it in getCache function
+            return res.status(200).json({
+                cacheData
+            })
+
+        }
+
         
         const jobs = await prisma.job.findMany({
             where : {
@@ -58,6 +70,9 @@ export const getJobs = async(req : Request , res : Response) =>{
                 message : "couldnt fetch jobs"
             })
         }
+
+        await setCache(key , jobs , 120);
+
         return res.status(200).json({
             jobs
         })

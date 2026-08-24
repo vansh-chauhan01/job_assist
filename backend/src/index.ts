@@ -4,6 +4,8 @@ import cookieParser from "cookie-parser"
 import cors from "cors"
 import { rateLimit } from 'express-rate-limit'
 import jobRouter from "./routers/job.routes.js"
+import { prisma } from "./db_init.js";
+import { connectToRedis } from "./services/redis.js";
 
 
 const app = express();
@@ -41,7 +43,23 @@ app.get("/" , limiter , (req , res) =>{
 })
 
 
-app.listen(8080 , () =>{
-    console.log("hi")
-})
+async function startServer() {
+    try{
+        await prisma.$connect();
+        console.log("database connected");
+        
+        await connectToRedis();
+
+        app.listen(8080 , async() =>{
+            console.log("database connected")
+        })
+        
+    }catch(e){
+        console.log("error initializing server" , e);
+    }
+    
+}
+
+
+startServer();
 
