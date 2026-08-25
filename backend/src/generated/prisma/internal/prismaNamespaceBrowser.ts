@@ -53,7 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Job: 'Job',
-  Todos: 'Todos'
+  Tasks: 'Tasks'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -94,14 +94,14 @@ export const JobScalarFieldEnum = {
 export type JobScalarFieldEnum = (typeof JobScalarFieldEnum)[keyof typeof JobScalarFieldEnum]
 
 
-export const TodosScalarFieldEnum = {
+export const TasksScalarFieldEnum = {
   id: 'id',
   title: 'title',
   userId: 'userId',
   completed: 'completed'
 } as const
 
-export type TodosScalarFieldEnum = (typeof TodosScalarFieldEnum)[keyof typeof TodosScalarFieldEnum]
+export type TasksScalarFieldEnum = (typeof TasksScalarFieldEnum)[keyof typeof TasksScalarFieldEnum]
 
 
 export const SortOrder = {

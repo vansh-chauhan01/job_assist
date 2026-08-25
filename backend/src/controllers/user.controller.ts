@@ -1,5 +1,5 @@
 import type { Request , Response } from "express"
-import { signInSchema , signUpSchema } from "../zodSchema/userSchema.js"
+import { signInSchema , signUpSchema } from "../zodSchema/user.zod.schema.js"
 import { prisma } from "../db_init.js"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"

@@ -52,7 +52,7 @@ export type User = Prisma.UserModel
  */
 export type Job = Prisma.JobModel
 /**
- * Model Todos
+ * Model Tasks
  * 
  */
-export type Todos = Prisma.TodosModel
+export type Tasks = Prisma.TasksModel

@@ -1,9 +1,7 @@
 import express from "express";
-import userRouter from "./routers/user.routes.js"
 import cookieParser from "cookie-parser"
 import cors from "cors"
 import { rateLimit } from 'express-rate-limit'
-import jobRouter from "./routers/job.routes.js"
 import { prisma } from "./db_init.js";
 import { connectToRedis } from "./services/redis.js";
 
@@ -32,8 +30,14 @@ app.use(cors({
 }))
 
 
+// api routing
+import userRouter from "./routers/user.routes.js"
+import jobRouter from "./routers/job.routes.js"
+import taskRouter from "./routers/tasks.routes.js"
+
 app.use("/api/v1/user/" , userRouter);
 app.use("/api/v1/job/" , jobRouter);
+app.use("/api/v1/task/" , taskRouter);
 
 
 app.get("/" , limiter , (req , res) =>{
@@ -47,12 +51,15 @@ async function startServer() {
     try{
         await prisma.$connect();
         console.log("database connected");
-        
-        await connectToRedis();
 
         app.listen(8080 , async() =>{
-            console.log("database connected")
+            console.log("server started")
         })
+        
+        await connectToRedis();
+        
+
+        
         
     }catch(e){
         console.log("error initializing server" , e);

@@ -399,7 +399,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   Job: 'Job',
-  Todos: 'Todos'
+  Tasks: 'Tasks'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -415,7 +415,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "job" | "todos"
+    modelProps: "user" | "job" | "tasks"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -567,77 +567,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Todos: {
-      payload: Prisma.$TodosPayload<ExtArgs>
-      fields: Prisma.TodosFieldRefs
+    Tasks: {
+      payload: Prisma.$TasksPayload<ExtArgs>
+      fields: Prisma.TasksFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.TodosFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TodosPayload> | null
+          args: Prisma.TasksFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TasksPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.TodosFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TodosPayload>
+          args: Prisma.TasksFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TasksPayload>
         }
         findFirst: {
-          args: Prisma.TodosFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TodosPayload> | null
+          args: Prisma.TasksFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TasksPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.TodosFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TodosPayload>
+          args: Prisma.TasksFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TasksPayload>
         }
         findMany: {
-          args: Prisma.TodosFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TodosPayload>[]
+          args: Prisma.TasksFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TasksPayload>[]
         }
         create: {
-          args: Prisma.TodosCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TodosPayload>
+          args: Prisma.TasksCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TasksPayload>
         }
         createMany: {
-          args: Prisma.TodosCreateManyArgs<ExtArgs>
+          args: Prisma.TasksCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.TodosCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TodosPayload>[]
+          args: Prisma.TasksCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TasksPayload>[]
         }
         delete: {
-          args: Prisma.TodosDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TodosPayload>
+          args: Prisma.TasksDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TasksPayload>
         }
         update: {
-          args: Prisma.TodosUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TodosPayload>
+          args: Prisma.TasksUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TasksPayload>
         }
         deleteMany: {
-          args: Prisma.TodosDeleteManyArgs<ExtArgs>
+          args: Prisma.TasksDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.TodosUpdateManyArgs<ExtArgs>
+          args: Prisma.TasksUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.TodosUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TodosPayload>[]
+          args: Prisma.TasksUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TasksPayload>[]
         }
         upsert: {
-          args: Prisma.TodosUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TodosPayload>
+          args: Prisma.TasksUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TasksPayload>
         }
         aggregate: {
-          args: Prisma.TodosAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateTodos>
+          args: Prisma.TasksAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTasks>
         }
         groupBy: {
-          args: Prisma.TodosGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TodosGroupByOutputType>[]
+          args: Prisma.TasksGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TasksGroupByOutputType>[]
         }
         count: {
-          args: Prisma.TodosCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TodosCountAggregateOutputType> | number
+          args: Prisma.TasksCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TasksCountAggregateOutputType> | number
         }
       }
     }
@@ -702,14 +702,14 @@ export const JobScalarFieldEnum = {
 export type JobScalarFieldEnum = (typeof JobScalarFieldEnum)[keyof typeof JobScalarFieldEnum]
 
 
-export const TodosScalarFieldEnum = {
+export const TasksScalarFieldEnum = {
   id: 'id',
   title: 'title',
   userId: 'userId',
   completed: 'completed'
 } as const
 
-export type TodosScalarFieldEnum = (typeof TodosScalarFieldEnum)[keyof typeof TodosScalarFieldEnum]
+export type TasksScalarFieldEnum = (typeof TasksScalarFieldEnum)[keyof typeof TasksScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -935,7 +935,7 @@ export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaC
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   job?: Prisma.JobOmit
-  todos?: Prisma.TodosOmit
+  tasks?: Prisma.TasksOmit
 }
 
 /* Types for Logging */

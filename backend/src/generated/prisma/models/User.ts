@@ -209,7 +209,7 @@ export type UserWhereInput = {
   password?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
   jobs?: Prisma.JobListRelationFilter
-  todos?: Prisma.TodosListRelationFilter
+  todos?: Prisma.TasksListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -218,7 +218,7 @@ export type UserOrderByWithRelationInput = {
   password?: Prisma.SortOrder
   email?: Prisma.SortOrder
   jobs?: Prisma.JobOrderByRelationAggregateInput
-  todos?: Prisma.TodosOrderByRelationAggregateInput
+  todos?: Prisma.TasksOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -230,7 +230,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   password?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
   jobs?: Prisma.JobListRelationFilter
-  todos?: Prisma.TodosListRelationFilter
+  todos?: Prisma.TasksListRelationFilter
 }, "id" | "userName">
 
 export type UserOrderByWithAggregationInput = {
@@ -260,7 +260,7 @@ export type UserCreateInput = {
   password: string
   email: string
   jobs?: Prisma.JobCreateNestedManyWithoutUserInput
-  todos?: Prisma.TodosCreateNestedManyWithoutUserInput
+  todos?: Prisma.TasksCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -269,7 +269,7 @@ export type UserUncheckedCreateInput = {
   password: string
   email: string
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutUserInput
-  todos?: Prisma.TodosUncheckedCreateNestedManyWithoutUserInput
+  todos?: Prisma.TasksUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -277,7 +277,7 @@ export type UserUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   jobs?: Prisma.JobUpdateManyWithoutUserNestedInput
-  todos?: Prisma.TodosUpdateManyWithoutUserNestedInput
+  todos?: Prisma.TasksUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -286,7 +286,7 @@ export type UserUncheckedUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   jobs?: Prisma.JobUncheckedUpdateManyWithoutUserNestedInput
-  todos?: Prisma.TodosUncheckedUpdateManyWithoutUserNestedInput
+  todos?: Prisma.TasksUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -387,7 +387,7 @@ export type UserCreateWithoutJobsInput = {
   userName: string
   password: string
   email: string
-  todos?: Prisma.TodosCreateNestedManyWithoutUserInput
+  todos?: Prisma.TasksCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutJobsInput = {
@@ -395,7 +395,7 @@ export type UserUncheckedCreateWithoutJobsInput = {
   userName: string
   password: string
   email: string
-  todos?: Prisma.TodosUncheckedCreateNestedManyWithoutUserInput
+  todos?: Prisma.TasksUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutJobsInput = {
@@ -418,7 +418,7 @@ export type UserUpdateWithoutJobsInput = {
   userName?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  todos?: Prisma.TodosUpdateManyWithoutUserNestedInput
+  todos?: Prisma.TasksUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutJobsInput = {
@@ -426,7 +426,7 @@ export type UserUncheckedUpdateWithoutJobsInput = {
   userName?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  todos?: Prisma.TodosUncheckedUpdateManyWithoutUserNestedInput
+  todos?: Prisma.TasksUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTodosInput = {
@@ -511,7 +511,7 @@ export type UserCountOutputTypeCountJobsArgs<ExtArgs extends runtime.Types.Exten
  * UserCountOutputType without action
  */
 export type UserCountOutputTypeCountTodosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TodosWhereInput
+  where?: Prisma.TasksWhereInput
 }
 
 
@@ -559,7 +559,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "User"
   objects: {
     jobs: Prisma.$JobPayload<ExtArgs>[]
-    todos: Prisma.$TodosPayload<ExtArgs>[]
+    todos: Prisma.$TasksPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -961,7 +961,7 @@ readonly fields: UserFieldRefs;
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   jobs<T extends Prisma.User$jobsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$jobsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  todos<T extends Prisma.User$todosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$todosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TodosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  todos<T extends Prisma.User$todosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$todosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TasksPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1416,23 +1416,23 @@ export type User$jobsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs 
  */
 export type User$todosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Todos
+   * Select specific fields to fetch from the Tasks
    */
-  select?: Prisma.TodosSelect<ExtArgs> | null
+  select?: Prisma.TasksSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Todos
+   * Omit specific fields from the Tasks
    */
-  omit?: Prisma.TodosOmit<ExtArgs> | null
+  omit?: Prisma.TasksOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.TodosInclude<ExtArgs> | null
-  where?: Prisma.TodosWhereInput
-  orderBy?: Prisma.TodosOrderByWithRelationInput | Prisma.TodosOrderByWithRelationInput[]
-  cursor?: Prisma.TodosWhereUniqueInput
+  include?: Prisma.TasksInclude<ExtArgs> | null
+  where?: Prisma.TasksWhereInput
+  orderBy?: Prisma.TasksOrderByWithRelationInput | Prisma.TasksOrderByWithRelationInput[]
+  cursor?: Prisma.TasksWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.TodosScalarFieldEnum | Prisma.TodosScalarFieldEnum[]
+  distinct?: Prisma.TasksScalarFieldEnum | Prisma.TasksScalarFieldEnum[]
 }
 
 /**

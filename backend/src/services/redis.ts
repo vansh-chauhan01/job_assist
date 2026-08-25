@@ -11,7 +11,9 @@ const connectToRedis = async()=>{
         client =  createClient({
             url : process.env.REDIS_URL ||  'redis://localhost:6379',
             socket : {
-                reconnectStrategy : false // it will not try to again and again try to connnect to redis and fail api
+                reconnectStrategy : () =>{
+                    return 3000 // wait for 3 seconds before trying to connect again
+                }
             }
         })
 
@@ -57,13 +59,13 @@ const getCache = async(key : string)=>{
 }
 
 
-const setCache = async(key : string , value : any, expireTime : number = 3600) =>{
+const setCache = async(key : string , value : any, expireTime : number = 2700) =>{
     try{
         if(!isRedisConnected || !client){
             return null;
         }
 
-        await client.set(key , JSON.stringify(value) , { EX : expireTime}); // expire after 45 min
+        await client.set(key , JSON.stringify(value) , { EX : expireTime}); // by default 45 min
         
         return true
 
