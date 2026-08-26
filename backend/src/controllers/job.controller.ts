@@ -52,13 +52,16 @@ export const getJobs = async(req : Request , res : Response) =>{
         const key = `job:${req.user_id}`
         const cacheData = await getCache(key);
 
+
         if(cacheData){
             // already parsing it in getCache function
+            
             return res.status(200).json({
                 cacheData
             })
 
         }
+
 
         
         const jobs = await prisma.job.findMany({

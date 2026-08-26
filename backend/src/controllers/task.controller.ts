@@ -31,13 +31,15 @@ export const getTask = async( req : Request , res : Response) =>{
 
 export const addTask = async( req : Request , res : Response) =>{
     try{
-
+        console.log("hi1")
+        console.log(req.body)
         const parsedData = createTaskSchema.safeParse(req.body);
         if(!parsedData.success){
             return res.status(400).json({
                 message : parsedData.error.message
             })
         }
+        console.log("hi2")
 
         const { title } = parsedData.data 
         const user_id = Number(req.user_id)
@@ -49,6 +51,7 @@ export const addTask = async( req : Request , res : Response) =>{
                 completed : false,
             }
         })
+        console.log("hi3")
 
         return res.status(201).json({
             newTask
