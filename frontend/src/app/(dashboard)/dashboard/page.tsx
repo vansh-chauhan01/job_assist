@@ -6,16 +6,12 @@ import { useEffect , useState } from "react"
 
 
 
-
-
-
-
 export default function dashBoard(){
 
     const router = useRouter();
 
-    const [tasks , setTasks] = useState([]);
-    const [jobs , setJobs] = useState([]);
+    const [data , setData] = useState({});
+    
 
     const sendToTaskPage = ()=>{
         router.push("/tasks")
@@ -23,33 +19,14 @@ export default function dashBoard(){
 
 
     useEffect( ()=>{
-        
-        const getTaskData = async()=>{
+        const getData = async()=>{
             try{
-                const taskData = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/task`, { withCredentials : true});
-                console.log(taskData);
-                setTasks(taskData.data.tasks);
-            }
-            catch(e){
-                console.error("Failed to fetch tasks:", e);
-            }
-        }
-
-        const getJobData = async ()=>{
-            try{
-                const jobData = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/job` , { withCredentials : true });
-                setJobs(jobData.data.jobs);
+                const userData = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/` , { withCredentials : true });
+                setData(userData.data.currUser);
             }catch(e){
-                console.error("failed to get job Data" , e);
+                console.log("error fetching user data", e);
             }
-        }
-
-
-
-        getTaskData();
-        getJobData();
-
-         
+        }         
     }, [])
 
 
@@ -77,16 +54,15 @@ export default function dashBoard(){
                 <p>
                     active job application
                 </p>
-                <p className="text-white">{jobs.length}</p>
-
+                
             </div>
             <br /><br /><br />
             <div>
                 <p>
                     tasks remaining
                 </p>
-                <p className="text-white">
-                    {tasks.length}
+                <p >
+                    
                 </p>
             </div>
 

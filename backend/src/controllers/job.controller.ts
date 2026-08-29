@@ -15,7 +15,7 @@ export const createJob = async(req : Request , res : Response) =>{
             })
         }
         const userId = Number(req.user_id!);
-        const { companyName , role , referral , remote } = parsedData.data;
+        const { companyName , role , referral , remote ,openingType } = parsedData.data;
 
         const newJob = await prisma.job.create({
             data :{
@@ -23,7 +23,8 @@ export const createJob = async(req : Request , res : Response) =>{
                 companyName : companyName,
                 role : role ,
                 referral : referral ,
-                remote : remote
+                remote : remote,
+                openingType : openingType
             }
         })
 
@@ -79,7 +80,7 @@ export const getJobs = async(req : Request , res : Response) =>{
         await setCache(key , jobs , 120);
 
         return res.status(200).json({
-            jobs
+            jobs : jobs
         })
     }catch(e){
         return res.status(500).json({

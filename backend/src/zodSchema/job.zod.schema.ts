@@ -6,5 +6,6 @@ export const createJobSchema = z.object({
     role : z.string(),
     referral : z.boolean(),
     remote : z.boolean(),
+    openingType : z.string()
 })
 

@@ -684,7 +684,8 @@ export const UserScalarFieldEnum = {
   id: 'id',
   userName: 'userName',
   password: 'password',
-  email: 'email'
+  email: 'email',
+  createdAt: 'createdAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -696,7 +697,9 @@ export const JobScalarFieldEnum = {
   companyName: 'companyName',
   role: 'role',
   referral: 'referral',
-  remote: 'remote'
+  remote: 'remote',
+  openingType: 'openingType',
+  createdAt: 'createdAt'
 } as const
 
 export type JobScalarFieldEnum = (typeof JobScalarFieldEnum)[keyof typeof JobScalarFieldEnum]
@@ -706,7 +709,8 @@ export const TasksScalarFieldEnum = {
   id: 'id',
   title: 'title',
   userId: 'userId',
-  completed: 'completed'
+  completed: 'completed',
+  createdAt: 'createdAt'
 } as const
 
 export type TasksScalarFieldEnum = (typeof TasksScalarFieldEnum)[keyof typeof TasksScalarFieldEnum]
@@ -759,6 +763,20 @@ export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 
  * Reference to a field of type 'String[]'
  */
 export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime'
+ */
+export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime[]'
+ */
+export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
     
 
 

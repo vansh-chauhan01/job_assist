@@ -117,3 +117,39 @@ export const signIn = async (req : Request , res : Response) =>{
     
 
 }
+
+export const currUser = async (req : Request , res : Response) =>{
+    try{
+
+        const user_id = Number(req.user_id!);
+        const currUser = await prisma.user.findFirst({
+            where : {
+                id : user_id
+            },
+            include: {
+                jobs: true,
+                tasks: true,
+            },
+            omit : {
+                password : true
+            }
+        })
+
+        if(!currUser){
+            return res.status(404).json({
+                message : "couldnt find user"
+            })
+        }
+
+        return res.status(200).json({
+            currUser : currUser
+        })
+
+
+    }catch(e){
+        return res.status(404).json({
+            message : "couldnt find user",
+            e : e
+        })
+    }
+}

@@ -76,7 +76,8 @@ export const UserScalarFieldEnum = {
   id: 'id',
   userName: 'userName',
   password: 'password',
-  email: 'email'
+  email: 'email',
+  createdAt: 'createdAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -88,7 +89,9 @@ export const JobScalarFieldEnum = {
   companyName: 'companyName',
   role: 'role',
   referral: 'referral',
-  remote: 'remote'
+  remote: 'remote',
+  openingType: 'openingType',
+  createdAt: 'createdAt'
 } as const
 
 export type JobScalarFieldEnum = (typeof JobScalarFieldEnum)[keyof typeof JobScalarFieldEnum]
@@ -98,7 +101,8 @@ export const TasksScalarFieldEnum = {
   id: 'id',
   title: 'title',
   userId: 'userId',
-  completed: 'completed'
+  completed: 'completed',
+  createdAt: 'createdAt'
 } as const
 
 export type TasksScalarFieldEnum = (typeof TasksScalarFieldEnum)[keyof typeof TasksScalarFieldEnum]

@@ -20,7 +20,7 @@ model User {
   password     String
   email        String
   jobs         Job[]    
-  todos        Tasks[]
+  tasks        Tasks[]
   createdAt    DateTime  @default(now())
 }
 
@@ -33,7 +33,8 @@ model Job {
   role          String
   referral      Boolean
   remote        Boolean
-  createdAt    DateTime  @default(now())
+  openingType   String
+  createdAt     DateTime  @default(now())
 }
 
 //todos -----> todo id ,userID , decription, done

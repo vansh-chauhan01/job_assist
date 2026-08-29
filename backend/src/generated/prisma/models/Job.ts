@@ -43,6 +43,8 @@ export type JobMinAggregateOutputType = {
   role: string | null
   referral: boolean | null
   remote: boolean | null
+  openingType: string | null
+  createdAt: Date | null
 }
 
 export type JobMaxAggregateOutputType = {
@@ -52,6 +54,8 @@ export type JobMaxAggregateOutputType = {
   role: string | null
   referral: boolean | null
   remote: boolean | null
+  openingType: string | null
+  createdAt: Date | null
 }
 
 export type JobCountAggregateOutputType = {
@@ -61,6 +65,8 @@ export type JobCountAggregateOutputType = {
   role: number
   referral: number
   remote: number
+  openingType: number
+  createdAt: number
   _all: number
 }
 
@@ -82,6 +88,8 @@ export type JobMinAggregateInputType = {
   role?: true
   referral?: true
   remote?: true
+  openingType?: true
+  createdAt?: true
 }
 
 export type JobMaxAggregateInputType = {
@@ -91,6 +99,8 @@ export type JobMaxAggregateInputType = {
   role?: true
   referral?: true
   remote?: true
+  openingType?: true
+  createdAt?: true
 }
 
 export type JobCountAggregateInputType = {
@@ -100,6 +110,8 @@ export type JobCountAggregateInputType = {
   role?: true
   referral?: true
   remote?: true
+  openingType?: true
+  createdAt?: true
   _all?: true
 }
 
@@ -196,6 +208,8 @@ export type JobGroupByOutputType = {
   role: string
   referral: boolean
   remote: boolean
+  openingType: string
+  createdAt: Date
   _count: JobCountAggregateOutputType | null
   _avg: JobAvgAggregateOutputType | null
   _sum: JobSumAggregateOutputType | null
@@ -228,6 +242,8 @@ export type JobWhereInput = {
   role?: Prisma.StringFilter<"Job"> | string
   referral?: Prisma.BoolFilter<"Job"> | boolean
   remote?: Prisma.BoolFilter<"Job"> | boolean
+  openingType?: Prisma.StringFilter<"Job"> | string
+  createdAt?: Prisma.DateTimeFilter<"Job"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
@@ -238,6 +254,8 @@ export type JobOrderByWithRelationInput = {
   role?: Prisma.SortOrder
   referral?: Prisma.SortOrder
   remote?: Prisma.SortOrder
+  openingType?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -251,6 +269,8 @@ export type JobWhereUniqueInput = Prisma.AtLeast<{
   role?: Prisma.StringFilter<"Job"> | string
   referral?: Prisma.BoolFilter<"Job"> | boolean
   remote?: Prisma.BoolFilter<"Job"> | boolean
+  openingType?: Prisma.StringFilter<"Job"> | string
+  createdAt?: Prisma.DateTimeFilter<"Job"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
@@ -261,6 +281,8 @@ export type JobOrderByWithAggregationInput = {
   role?: Prisma.SortOrder
   referral?: Prisma.SortOrder
   remote?: Prisma.SortOrder
+  openingType?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   _count?: Prisma.JobCountOrderByAggregateInput
   _avg?: Prisma.JobAvgOrderByAggregateInput
   _max?: Prisma.JobMaxOrderByAggregateInput
@@ -278,6 +300,8 @@ export type JobScalarWhereWithAggregatesInput = {
   role?: Prisma.StringWithAggregatesFilter<"Job"> | string
   referral?: Prisma.BoolWithAggregatesFilter<"Job"> | boolean
   remote?: Prisma.BoolWithAggregatesFilter<"Job"> | boolean
+  openingType?: Prisma.StringWithAggregatesFilter<"Job"> | string
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Job"> | Date | string
 }
 
 export type JobCreateInput = {
@@ -285,6 +309,8 @@ export type JobCreateInput = {
   role: string
   referral: boolean
   remote: boolean
+  openingType: string
+  createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutJobsInput
 }
 
@@ -295,6 +321,8 @@ export type JobUncheckedCreateInput = {
   role: string
   referral: boolean
   remote: boolean
+  openingType: string
+  createdAt?: Date | string
 }
 
 export type JobUpdateInput = {
@@ -302,6 +330,8 @@ export type JobUpdateInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   referral?: Prisma.BoolFieldUpdateOperationsInput | boolean
   remote?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  openingType?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutJobsNestedInput
 }
 
@@ -312,6 +342,8 @@ export type JobUncheckedUpdateInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   referral?: Prisma.BoolFieldUpdateOperationsInput | boolean
   remote?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  openingType?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type JobCreateManyInput = {
@@ -321,6 +353,8 @@ export type JobCreateManyInput = {
   role: string
   referral: boolean
   remote: boolean
+  openingType: string
+  createdAt?: Date | string
 }
 
 export type JobUpdateManyMutationInput = {
@@ -328,6 +362,8 @@ export type JobUpdateManyMutationInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   referral?: Prisma.BoolFieldUpdateOperationsInput | boolean
   remote?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  openingType?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type JobUncheckedUpdateManyInput = {
@@ -337,6 +373,8 @@ export type JobUncheckedUpdateManyInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   referral?: Prisma.BoolFieldUpdateOperationsInput | boolean
   remote?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  openingType?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type JobListRelationFilter = {
@@ -356,6 +394,8 @@ export type JobCountOrderByAggregateInput = {
   role?: Prisma.SortOrder
   referral?: Prisma.SortOrder
   remote?: Prisma.SortOrder
+  openingType?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type JobAvgOrderByAggregateInput = {
@@ -370,6 +410,8 @@ export type JobMaxOrderByAggregateInput = {
   role?: Prisma.SortOrder
   referral?: Prisma.SortOrder
   remote?: Prisma.SortOrder
+  openingType?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type JobMinOrderByAggregateInput = {
@@ -379,6 +421,8 @@ export type JobMinOrderByAggregateInput = {
   role?: Prisma.SortOrder
   referral?: Prisma.SortOrder
   remote?: Prisma.SortOrder
+  openingType?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type JobSumOrderByAggregateInput = {
@@ -437,6 +481,8 @@ export type JobCreateWithoutUserInput = {
   role: string
   referral: boolean
   remote: boolean
+  openingType: string
+  createdAt?: Date | string
 }
 
 export type JobUncheckedCreateWithoutUserInput = {
@@ -445,6 +491,8 @@ export type JobUncheckedCreateWithoutUserInput = {
   role: string
   referral: boolean
   remote: boolean
+  openingType: string
+  createdAt?: Date | string
 }
 
 export type JobCreateOrConnectWithoutUserInput = {
@@ -483,6 +531,8 @@ export type JobScalarWhereInput = {
   role?: Prisma.StringFilter<"Job"> | string
   referral?: Prisma.BoolFilter<"Job"> | boolean
   remote?: Prisma.BoolFilter<"Job"> | boolean
+  openingType?: Prisma.StringFilter<"Job"> | string
+  createdAt?: Prisma.DateTimeFilter<"Job"> | Date | string
 }
 
 export type JobCreateManyUserInput = {
@@ -491,6 +541,8 @@ export type JobCreateManyUserInput = {
   role: string
   referral: boolean
   remote: boolean
+  openingType: string
+  createdAt?: Date | string
 }
 
 export type JobUpdateWithoutUserInput = {
@@ -498,6 +550,8 @@ export type JobUpdateWithoutUserInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   referral?: Prisma.BoolFieldUpdateOperationsInput | boolean
   remote?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  openingType?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type JobUncheckedUpdateWithoutUserInput = {
@@ -506,6 +560,8 @@ export type JobUncheckedUpdateWithoutUserInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   referral?: Prisma.BoolFieldUpdateOperationsInput | boolean
   remote?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  openingType?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type JobUncheckedUpdateManyWithoutUserInput = {
@@ -514,6 +570,8 @@ export type JobUncheckedUpdateManyWithoutUserInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   referral?: Prisma.BoolFieldUpdateOperationsInput | boolean
   remote?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  openingType?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -525,6 +583,8 @@ export type JobSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   role?: boolean
   referral?: boolean
   remote?: boolean
+  openingType?: boolean
+  createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["job"]>
 
@@ -535,6 +595,8 @@ export type JobSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   role?: boolean
   referral?: boolean
   remote?: boolean
+  openingType?: boolean
+  createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["job"]>
 
@@ -545,6 +607,8 @@ export type JobSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   role?: boolean
   referral?: boolean
   remote?: boolean
+  openingType?: boolean
+  createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["job"]>
 
@@ -555,9 +619,11 @@ export type JobSelectScalar = {
   role?: boolean
   referral?: boolean
   remote?: boolean
+  openingType?: boolean
+  createdAt?: boolean
 }
 
-export type JobOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "companyName" | "role" | "referral" | "remote", ExtArgs["result"]["job"]>
+export type JobOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "companyName" | "role" | "referral" | "remote" | "openingType" | "createdAt", ExtArgs["result"]["job"]>
 export type JobInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -580,6 +646,8 @@ export type $JobPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     role: string
     referral: boolean
     remote: boolean
+    openingType: string
+    createdAt: Date
   }, ExtArgs["result"]["job"]>
   composites: {}
 }
@@ -1010,6 +1078,8 @@ export interface JobFieldRefs {
   readonly role: Prisma.FieldRef<"Job", 'String'>
   readonly referral: Prisma.FieldRef<"Job", 'Boolean'>
   readonly remote: Prisma.FieldRef<"Job", 'Boolean'>
+  readonly openingType: Prisma.FieldRef<"Job", 'String'>
+  readonly createdAt: Prisma.FieldRef<"Job", 'DateTime'>
 }
     
 
