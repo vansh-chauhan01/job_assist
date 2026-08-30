@@ -34,10 +34,12 @@ app.use(cors({
 import userRouter from "./routers/user.routes.js"
 import jobRouter from "./routers/job.routes.js"
 import taskRouter from "./routers/tasks.routes.js"
+import loggRouter from "./routers/logg.routes.js"
 
 app.use("/api/v1/user/" , userRouter);
 app.use("/api/v1/job/" , jobRouter);
 app.use("/api/v1/task/" , taskRouter);
+app.use("/api/v1/logg/" , loggRouter);
 
 
 app.get("/" , limiter , (req , res) =>{

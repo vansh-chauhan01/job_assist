@@ -398,6 +398,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
+  Loggs: 'Loggs',
   Job: 'Job',
   Tasks: 'Tasks'
 } as const
@@ -415,7 +416,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "job" | "tasks"
+    modelProps: "user" | "loggs" | "job" | "tasks"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -490,6 +491,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+        }
+      }
+    }
+    Loggs: {
+      payload: Prisma.$LoggsPayload<ExtArgs>
+      fields: Prisma.LoggsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LoggsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoggsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LoggsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoggsPayload>
+        }
+        findFirst: {
+          args: Prisma.LoggsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoggsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LoggsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoggsPayload>
+        }
+        findMany: {
+          args: Prisma.LoggsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoggsPayload>[]
+        }
+        create: {
+          args: Prisma.LoggsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoggsPayload>
+        }
+        createMany: {
+          args: Prisma.LoggsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LoggsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoggsPayload>[]
+        }
+        delete: {
+          args: Prisma.LoggsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoggsPayload>
+        }
+        update: {
+          args: Prisma.LoggsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoggsPayload>
+        }
+        deleteMany: {
+          args: Prisma.LoggsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LoggsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LoggsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoggsPayload>[]
+        }
+        upsert: {
+          args: Prisma.LoggsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoggsPayload>
+        }
+        aggregate: {
+          args: Prisma.LoggsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLoggs>
+        }
+        groupBy: {
+          args: Prisma.LoggsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LoggsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LoggsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LoggsCountAggregateOutputType> | number
         }
       }
     }
@@ -689,6 +764,18 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const LoggsScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  rating: 'rating',
+  description: 'description',
+  date: 'date',
+  createdAt: 'createdAt'
+} as const
+
+export type LoggsScalarFieldEnum = (typeof LoggsScalarFieldEnum)[keyof typeof LoggsScalarFieldEnum]
 
 
 export const JobScalarFieldEnum = {
@@ -952,6 +1039,7 @@ export interface PrismaClientOptionsWithAdapter extends PrismaClientBaseOptions 
 export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaClientOptionsWithAdapter
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  loggs?: Prisma.LoggsOmit
   job?: Prisma.JobOmit
   tasks?: Prisma.TasksOmit
 }

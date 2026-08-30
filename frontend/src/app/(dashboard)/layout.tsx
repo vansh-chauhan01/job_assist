@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-    MonitorCog ,
+    MonitorCog,
     CheckSquare,
     Building2,
     FileText,
@@ -32,42 +32,42 @@ export default function DashboardLayout({
     const pathname = usePathname();
 
     return (
-        <div className="flex min-h-screen bg-[#0a0b0f]">
+        <div className="flex min-h-screen bg-gray-50">
             {/* Overlay behind sidebar on mobile */}
             {sidebarOpen && (
                 <div
-                    className="fixed inset-0 z-30 bg-black/60 md:hidden"
+                    className="fixed inset-0 z-30 bg-black/30 md:hidden"
                     onClick={() => setSidebarOpen(false)}
                 />
             )}
 
             {/* Sidebar */}
             <aside
-                className={`fixed inset-y-0 left-0 z-40 flex w-70 transform flex-col border-r border-gray-800 bg-[#0d0f14] px-4 py-6 transition-transform duration-200 ease-in-out
+                className={`fixed inset-y-0 left-0 z-40 flex w-64 sm:w-72 transform flex-col border-r border-gray-200 bg-white px-4 py-6 transition-transform duration-200 ease-in-out
                     ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
-                    md:static md:translate-x-0`}
+                    md:static md:translate-x-0 md:w-64`}
             >
                 {/* Logo row + close button (close only shows on mobile) */}
                 <div className="mb-8 flex items-center justify-between px-2">
-                    <div className="flex items-center gap-2">
-                        <div className="text-xl">🎯</div>
-                        <span className="text-lg font-semibold text-white">
+                    <div className="flex items-center gap-2 min-w-0">
+                        <div className="text-xl shrink-0">🎯</div>
+                        <span className="truncate text-lg font-semibold text-gray-900">
                             ApplyStack
                         </span>
                     </div>
                     <button
                         onClick={() => setSidebarOpen(false)}
-                        className="rounded-md p-1 text-gray-400 hover:bg-white/5 hover:text-white md:hidden"
+                        className="shrink-0 rounded-md p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-900 md:hidden"
                     >
                         <X size={20} />
                     </button>
                 </div>
 
-                <p className="mb-3 px-2 text-xs font-medium tracking-wide text-gray-500">
+                <p className="mb-3 px-2 text-xs font-medium tracking-wide text-gray-400">
                     MENU
                 </p>
 
-                <nav className="flex flex-1 flex-col gap-1">
+                <nav className="flex flex-1 flex-col gap-1 overflow-y-auto">
                     {navItems.map((item) => {
                         const isActive = pathname === item.href;
                         const Icon = item.icon;
@@ -78,50 +78,51 @@ export default function DashboardLayout({
                                 onClick={() => setSidebarOpen(false)}
                                 className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm ${
                                     isActive
-                                        ? "border-l-2 border-indigo-500 bg-white/5 font-medium text-white"
-                                        : "text-gray-400 hover:bg-white/5 hover:text-white"
+                                        ? "border-l-2 border-indigo-500 bg-indigo-50 font-medium text-indigo-700"
+                                        : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                                 }`}
                             >
-                                <span className="flex items-center gap-3">
-                                    <Icon size={18} />
-                                    {item.label}
+                                <span className="flex min-w-0 items-center gap-3">
+                                    <Icon size={18} className="shrink-0" />
+                                    <span className="truncate">{item.label}</span>
                                 </span>
                                 {isActive && (
-                                    <span className="text-gray-500">›</span>
+                                    <span className="shrink-0 text-indigo-400">›</span>
                                 )}
                             </Link>
                         );
                     })}
                 </nav>
 
-                <button className="mt-auto flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-white/5 hover:text-white">
-                    <LogOut size={18} />
+                <button className="mt-auto flex items-center gap-3 rounded-lg px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900">
+                    <LogOut size={18} className="shrink-0" />
                     <span className="text-sm">Logout</span>
                 </button>
             </aside>
 
             {/* Main column */}
-            <div className="flex flex-1 flex-col">
+            <div className="flex min-w-0 flex-1 flex-col">
                 {/* Top bar — only really needed for the mobile hamburger */}
-                <header className="flex items-center justify-between border-b border-gray-800 bg-[#0d0f14] px-4 py-3 md:hidden">
-                    <div className="flex items-center gap-2">
-                        <div className="text-xl">🎯</div>
-                        <span className="text-lg font-semibold text-white">
+                <header className="sticky top-0 z-20 flex items-center justify-between border-b border-gray-200 bg-white px-4 py-3 md:hidden">
+                    <div className="flex items-center gap-2 min-w-0">
+                        <div className="text-xl shrink-0">🎯</div>
+                        <span className="truncate text-lg font-semibold text-gray-900">
                             ApplyStack
                         </span>
                     </div>
                     <button
                         onClick={() => setSidebarOpen(true)}
-                        className="rounded-md bg-white/5 p-2 text-white"
+                        className="shrink-0 rounded-md bg-gray-100 p-2 text-gray-700"
                     >
                         <Menu size={20} />
                     </button>
                 </header>
 
-                <main className="flex-1 px-5 py-6 md:px-10 md:py-8">
+                <main className="flex-1 overflow-x-hidden px-4 py-5 sm:px-6 sm:py-6 md:px-10 md:py-8">
                     {children}
                 </main>
             </div>
+            
         </div>
     );
 }
