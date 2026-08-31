@@ -15,15 +15,17 @@ export const logToday = async(req : Request , res : Response)=>{
         today.setHours(0, 0, 0, 0); //it will strip the time, only date remains
 
         const userId = Number(req.user_id!);
-        const {description , rating} = parsedData.data
+        const {description , rating , date} = parsedData.data
+        const parsedDate = new Date(date);// convert string date to js date
+       
 
         // if logg for today already exist update it otherwise make it.
         const newLog = await prisma.loggs.upsert({
             where : {
-                userId_date : {userId , date : today}
+                userId_date : {userId , date : parsedDate}
             },
             update: { rating, description },
-            create: { userId, date: today, rating, description },
+            create: { userId, date: parsedDate, rating, description },
         })
 
         return res.status(201).json({

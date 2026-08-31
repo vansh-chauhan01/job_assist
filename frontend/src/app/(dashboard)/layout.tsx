@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
     MonitorCog,
     CheckSquare,
@@ -14,12 +14,12 @@ import {
     Menu,
     X,
 } from "lucide-react";
+import axios from "axios";
 
 const navItems = [
     { label: "Dashboard", href: "/dashboard", icon: MonitorCog },
+    { label: "Applications", href: "/jobApplication", icon: Building2 },
     { label: "Tasks", href: "/tasks", icon: CheckSquare },
-    { label: "Applications", href: "/applications", icon: Building2 },
-    { label: "Profile", href: "/profile", icon: User },
     { label: "AI Assistant", href: "/assistant", icon: Sparkles },
 ];
 
@@ -31,8 +31,20 @@ export default function DashboardLayout({
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const pathname = usePathname();
 
+    const router = useRouter();
+
+    const handleLogout = async()=>{
+        try{
+            axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/logout` , { withCredentials : true });
+            router.push("/auth/signIn");
+        }catch(e){
+
+        }
+    }
+
+
     return (
-        <div className="flex min-h-screen bg-gray-50">
+        <div className="flex h-screen overflow-hidden bg-gray-50">
             {/* Overlay behind sidebar on mobile */}
             {sidebarOpen && (
                 <div
@@ -43,16 +55,16 @@ export default function DashboardLayout({
 
             {/* Sidebar */}
             <aside
-                className={`fixed inset-y-0 left-0 z-40 flex w-64 sm:w-72 transform flex-col border-r border-gray-200 bg-white px-4 py-6 transition-transform duration-200 ease-in-out
+                className={`fixed inset-y-0 left-0 z-40 flex w-64 sm:w-72 h-screen transform flex-col border-r border-gray-200 bg-white px-4 py-6 transition-transform duration-200 ease-in-out
                     ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
-                    md:static md:translate-x-0 md:w-64`}
+                    md:static md:translate-x-0 md:w-64 md:h-auto`}
             >
                 {/* Logo row + close button (close only shows on mobile) */}
                 <div className="mb-8 flex items-center justify-between px-2">
                     <div className="flex items-center gap-2 min-w-0">
                         <div className="text-xl shrink-0">🎯</div>
-                        <span className="truncate text-lg font-semibold text-gray-900">
-                            ApplyStack
+                        <span className="truncate text-2xl font-semibold text-gray-900">
+                            JobAssist
                         </span>
                     </div>
                     <button
@@ -94,20 +106,20 @@ export default function DashboardLayout({
                     })}
                 </nav>
 
-                <button className="mt-auto flex items-center gap-3 rounded-lg px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900">
+                <button onClick={handleLogout} className="mt-auto flex items-center gap-3 rounded-lg px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900">
                     <LogOut size={18} className="shrink-0" />
                     <span className="text-sm">Logout</span>
                 </button>
             </aside>
 
             {/* Main column */}
-            <div className="flex min-w-0 flex-1 flex-col">
+            <div className="flex min-w-0 flex-1 flex-col md:ml-0 overflow-hidden">
                 {/* Top bar — only really needed for the mobile hamburger */}
                 <header className="sticky top-0 z-20 flex items-center justify-between border-b border-gray-200 bg-white px-4 py-3 md:hidden">
                     <div className="flex items-center gap-2 min-w-0">
                         <div className="text-xl shrink-0">🎯</div>
                         <span className="truncate text-lg font-semibold text-gray-900">
-                            ApplyStack
+                            JobAssist
                         </span>
                     </div>
                     <button
@@ -118,11 +130,11 @@ export default function DashboardLayout({
                     </button>
                 </header>
 
-                <main className="flex-1 overflow-x-hidden px-4 py-5 sm:px-6 sm:py-6 md:px-10 md:py-8">
+                <main className="flex-1 overflow-y-auto overflow-x-hidden px-4 py-5 sm:px-6 sm:py-6 md:px-10 md:py-8">
                     {children}
                 </main>
             </div>
-            
+
         </div>
     );
 }

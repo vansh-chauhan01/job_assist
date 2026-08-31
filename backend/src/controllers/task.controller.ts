@@ -78,16 +78,13 @@ export const deleteTask = async( req : Request , res : Response) =>{
             })
         }
 
-        const deltask = await prisma.tasks.deleteMany({
+        const deltask = await prisma.tasks.delete({
             where : {
                 id : id,
                 userId : Number(req.user_id!)
             }
         })
 
-        if(deltask.count === 0){
-            return res.status(404).json({message : "couldnt find the task"})
-        }
 
         return res.status(200).json({
             message : "task deleted"
@@ -128,7 +125,7 @@ export const updateTask = async( req : Request , res : Response )=>{
         if(title !== undefined) newData.title = title;
         if(completed !== undefined) newData.completed = completed;
 
-        const updatedTask = await prisma.tasks.updateMany({
+        const updatedTask = await prisma.tasks.update({
             where : {
                 id : id,
                 userId : Number(req.user_id!)

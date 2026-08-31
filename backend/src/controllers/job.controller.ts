@@ -48,7 +48,7 @@ export const createJob = async(req : Request , res : Response) =>{
     }
 }
 
-export const getJobs = async(req : Request , res : Response) =>{
+export const getAllJobs = async(req : Request , res : Response) =>{
     try{
         const key = `job:${req.user_id}`
         const cacheData = await getCache(key);
@@ -58,7 +58,7 @@ export const getJobs = async(req : Request , res : Response) =>{
             // already parsing it in getCache function
             
             return res.status(200).json({
-                cacheData
+                jobs : cacheData
             })
 
         }
@@ -90,7 +90,6 @@ export const getJobs = async(req : Request , res : Response) =>{
 }
 
 
-
 export const deleteJob = async(req : Request , res : Response)=>{
     try{
         const { jobId } = req.params;
@@ -101,7 +100,7 @@ export const deleteJob = async(req : Request , res : Response)=>{
             })
         }
         
-        const deletedJob = await prisma.job.deleteMany({
+        const deletedJob = await prisma.job.delete({
             where : {
                 id : id,
                 userId : Number(req.user_id!)
@@ -128,3 +127,95 @@ export const deleteJob = async(req : Request , res : Response)=>{
         })
     }
 }
+
+export const getJob = async(req : Request, res : Response)=>{
+    try{
+        const jobId = Number(req.params.jobId);
+        if(!jobId){
+            return res.status(400).json({
+                message : "job id is required"
+            })
+        }
+
+        const userId = Number(req.user_id!);
+
+
+        const job = await prisma.job.findFirst({
+            where : {
+                id : jobId,
+                userId : userId
+            }
+        })
+
+        return res.status(200).json({
+            jobs : job
+        })
+
+    }catch(e){
+        return res.status(500).json({
+            message : "couldnt fetch this job",
+            e : e
+        })
+    }
+}
+
+
+export const updateJob = async (req: Request, res: Response) => {
+    try {
+        const jobId = Number(req.params.jobId);
+
+        if (!Number.isInteger(jobId) || jobId <= 0) {
+            return res.status(400).json({
+                message: "Invalid job ID",
+            });
+        }
+
+        const userId = Number(req.user_id);
+
+        if (!Number.isInteger(userId) || userId <= 0) {
+            return res.status(401).json({
+                message: "Unauthorized",
+            });
+        }
+
+        const {
+            companyName,
+            role,
+            referral,
+            remote,
+            openingType,
+        } = req.body;
+
+        const updatedData = {
+            ...(companyName !== undefined && { companyName }),
+            ...(role !== undefined && { role }),
+            ...(referral !== undefined && { referral }),
+            ...(remote !== undefined && { remote }),
+            ...(openingType !== undefined && { openingType }),
+        };
+
+        if (Object.keys(updatedData).length === 0) {
+            return res.status(400).json({
+                message: "No fields provided for update",
+            });
+        }
+
+        const updatedJob = await prisma.job.update({
+            where: {
+                id: jobId,
+                userId: userId,
+            },
+            data: updatedData,
+        });
+
+        return res.status(200).json({
+            message: "Job updated successfully",
+            job: updatedJob,
+        });
+    } catch (error) {
+        console.error("updateJob error:", error);
+        return res.status(500).json({
+            message: "Internal server error",
+        });
+    }
+};

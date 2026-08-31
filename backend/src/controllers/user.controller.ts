@@ -4,6 +4,7 @@ import { prisma } from "../db_init.js"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import cloudfare from "../services/cloudfare.js"
+import { access } from "node:fs"
 
 export const signUp = async (req : Request , res : Response) =>{
 
@@ -150,6 +151,27 @@ export const currUser = async (req : Request , res : Response) =>{
         return res.status(404).json({
             message : "couldnt find user",
             e : e
+        })
+    }
+}
+
+
+export const logout = async (req : Request , res : Response) =>{
+    try{
+        res.clearCookie("access_token", {
+            httpOnly : true ,
+            secure: true,
+            sameSite: "none",
+            path: "/",
+        })
+
+        return res.status(200).json({
+            message : "user logged out successfully"
+        })
+
+    }catch(e){
+        return res.status(500).json({
+            message : "error logging out user"
         })
     }
 }

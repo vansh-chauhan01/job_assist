@@ -3,6 +3,9 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
+import LoggForm from "@/components/LoggForm";
+import RatingChart from "@/components/RatingGraph";
+import { Building2, CheckSquare, Flame } from "lucide-react";
 
 
 interface heatmap {
@@ -69,7 +72,6 @@ export default function dashBoard() {
         }
 
 
-        
 
         getHeatMap();
         getData();
@@ -96,11 +98,22 @@ export default function dashBoard() {
     };
 
 
+    const scoreColors = [
+        "#7f1d1d", // 1
+        "#dc2626", // 2
+        "#f87171", // 3
+        "#f59e0b", // 4
+        "#f59e0b", // 5
+        "#facc15", // 6
+        "#86efac", // 7
+        "#22c55e", // 8
+        "#14b8a6", // 9
+        "#115e59", // 10
+    ];
+
     const getColor = (rating: number | undefined) => {
         if (rating === undefined) return "#ebedf0";
-        if (rating > 7) return "#4caf50";
-        if (rating >= 5) return "#ff9800";
-        return "#f44336";
+        return scoreColors[rating - 1] ?? "#ebedf0";
     };
 
 
@@ -173,7 +186,7 @@ export default function dashBoard() {
         return Math.round((total / logs.length) * 10) / 10;
     };
 
-    
+
     const allDates = generateDateRange(365);
     const monthGroups = groupByMonth(allDates);
     const maxStreak = getMaxStreak(allDates, logsByDate);
@@ -184,40 +197,61 @@ export default function dashBoard() {
         <div className="max-w-4.5xl mx-auto px-4">
 
             <div className="mb-3">
-                <h6 className="text-4xl font-bold">Dashboard</h6>
-                <p className="mt-2.5">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">Dashboard</h1>
+                <p className="mt-2.5 text-sm sm:text-base">
                     hi {data?.userName}, Ready to make today count?
                 </p>
             </div>
 
-            <div className="mt-3 flex gap-4">
-                <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 w-80 h-60 ">
-                    <p>Active Jobs Application</p>
-                    <p>{data?.jobs.length}</p>
-                    
+
+            <div className="mt-3 flex flex-col sm:flex-row gap-4">
+                <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 w-full sm:flex-1 h-56 sm:h-60 flex flex-col">
+                    <div className="flex items-center justify-between">
+                        <p className="text-sm font-medium text-gray-500">Active Job Applications</p>
+                        <div className="w-9 h-9 shrink-0 rounded-full bg-indigo-50 flex items-center justify-center">
+                            <Building2 size={18} className="text-indigo-600" />
+                        </div>
+                    </div>
+                    <div className="mt-auto">
+                        <p className="text-3xl sm:text-4xl font-bold text-gray-900">{data?.jobs.length ?? 0}</p>
+                        <p className="text-xs text-gray-400 mt-1">applications tracked</p>
+                    </div>
                 </div>
 
-                <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 w-80 h-60">
-                    <p>Tasks Remaining</p>
-                    <p>{data?.tasks.length}</p>
+                <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 w-full sm:flex-1 h-56 sm:h-60 flex flex-col">
+                    <div className="flex items-center justify-between">
+                        <p className="text-sm font-medium text-gray-500">Tasks Remaining</p>
+                        <div className="w-9 h-9 shrink-0 rounded-full bg-amber-50 flex items-center justify-center">
+                            <CheckSquare size={18} className="text-amber-600" />
+                        </div>
+                    </div>
+                    <div className="mt-auto">
+                        <p className="text-3xl sm:text-4xl font-bold text-gray-900">{data?.tasks.length ?? 0}</p>
+                        <p className="text-xs text-gray-400 mt-1">to complete</p>
+                    </div>
                 </div>
-                <div className="bg-white border border-gray-100 rounded-2xl shadow-md p-6 w-80 h-60">
-                    <p>Daily Logs</p>
-                    <p>Max Streak {maxStreak}</p>
-                    <p>Average Rating {averageRating}</p>
+
+                <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 w-full sm:flex-1 h-56 sm:h-60 flex flex-col">
+                    <div className="flex items-center justify-between">
+                        <p className="text-sm font-medium text-gray-500">Daily Logs</p>
+                        <div className="w-9 h-9 shrink-0 rounded-full bg-emerald-50 flex items-center justify-center">
+                            <Flame size={18} className="text-emerald-600" />
+                        </div>
+                    </div>
+
+                    <RatingChart
+                        heatmapData={heatmapData}
+                        maxStreak={maxStreak}
+                        averageRating={averageRating}
+                    />
                 </div>
             </div>
 
-            {/* cards */}
-            <div>
-                <div>
 
-                </div>
-            </div>
 
 
             {/* heatmap */}
-            <div className="flex gap-3 sm:gap-4 overflow-x-auto py-2 px-1 pb-3">
+            <div className="mt-7 mb-10 flex gap-2 sm:gap-4 overflow-x-auto p-4 sm:p-5 bg-white border border-gray-100 rounded-2xl shadow-md">
                 {Object.entries(monthGroups).map(([monthKey, dates]) => {
                     const weeks = groupMonthIntoWeeks(dates);
                     return (
@@ -245,7 +279,10 @@ export default function dashBoard() {
                     );
                 })}
             </div>
+
+            <LoggForm onSaved={getHeatMap} />
+
         </div>
-        
+
     )
 }
