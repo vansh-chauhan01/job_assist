@@ -2,6 +2,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Turnstile } from "@marsidev/react-turnstile";
+import { useRouter } from "next/navigation";
 
 export default function signUp(){
 
@@ -9,10 +10,12 @@ export default function signUp(){
     const [password , setPassword] = useState("");
     const [email , setEmail] = useState("");
     const [token , setToken] = useState("");
+    const router = useRouter();
 
     const handleSubmit = async()=>{
         console.log(`${process.env.NEXT_PUBLIC_SITE_KEY!}`)
         await axios.post("http://localhost:8080/api/v1/user/signup" , {username : userName, email : email , password : password , token : token})
+        router.push("/auth/signIn")
     }
 
     return <div>

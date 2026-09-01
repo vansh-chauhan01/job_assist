@@ -74,7 +74,7 @@ export default function LoggForm({ date, onSaved }: LoggFormProps) {
                 </div>
 
                 <div>
-                    <p className="text-xs font-medium tracking-wide text-gray-500 mb-2">SCORE</p>
+                    <p className="text-xs font-medium tracking-wide text-gray-500 mb-2">SCORE YOUR DAY</p>
                     <div className="flex gap-2 flex-wrap">
                         {scoreColors.map((color, i) => {
                             const value = i + 1;

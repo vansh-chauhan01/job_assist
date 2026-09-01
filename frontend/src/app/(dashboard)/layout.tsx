@@ -13,6 +13,7 @@ import {
     LogOut,
     Menu,
     X,
+    NotepadText,
 } from "lucide-react";
 import axios from "axios";
 
@@ -20,6 +21,7 @@ const navItems = [
     { label: "Dashboard", href: "/dashboard", icon: MonitorCog },
     { label: "Applications", href: "/jobApplication", icon: Building2 },
     { label: "Tasks", href: "/tasks", icon: CheckSquare },
+    { label: "Loggs", href: "/loggs", icon: NotepadText },
     { label: "AI Assistant", href: "/assistant", icon: Sparkles },
 ];
 

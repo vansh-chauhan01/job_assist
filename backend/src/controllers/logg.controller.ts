@@ -77,3 +77,23 @@ export const getHeatMap = async(req : Request , res : Response)=>{
         })
     }
 }
+
+
+export const getLoggs = async(req : Request , res : Response)=>{
+    try{
+        const userId = Number(req.user_id!);
+        const loggs = await prisma.loggs.findMany({
+            where : {
+                userId : userId
+            }
+        })
+        return res.status(200).json({
+            loggs : loggs
+        })
+    }catch(e){
+        return res.status(500).json({
+            message : "couldnt fetch loggs",
+            e : e
+        })
+    }
+}
