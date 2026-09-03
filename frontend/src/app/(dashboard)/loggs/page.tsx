@@ -29,12 +29,21 @@ export default function Loggs(){
 
     return (
         <div>
+            <p className="text-3xl font-semibold mb-4">
+                Your Loggs
+            </p>
             {loggs.map((logg : any , index : number) => (
                 <div key={index} className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 mb-4">
                     <div className="mb-5">
                         <h3 className="font-semibold text-lg">{new Date(logg.date).toLocaleDateString()}</h3>
-                        <p className="text-sm text-gray-500">Rating: {logg.rating}</p>
-                        <p className="text-sm text-gray-500">Description: {logg.description}</p>    
+                        <div className="flex gap-2">
+                            <p className="font-medium">Rating:</p>
+                            <p className="text-sm text-gray-500"> {logg.rating}</p>
+                        </div>
+                        <p className="font-medium">Description:</p>
+                        <p className="whitespace-pre-line">
+                            {logg.description.replace(/\\n/g, "\n")}
+                        </p>
                     </div>
                 </div>
             ))}

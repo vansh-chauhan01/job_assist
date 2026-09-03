@@ -1,6 +1,7 @@
 import type { Request , Response } from "express"
 import { dayLoggSchema } from "../zodSchema/logg.zod.schema.js"
 import { prisma } from "../db_init.js";
+import { getCache , setCache , deleteCache } from "../services/redis.js";
 
 export const logToday = async(req : Request , res : Response)=>{
     try{
@@ -19,7 +20,7 @@ export const logToday = async(req : Request , res : Response)=>{
         const parsedDate = new Date(date);// convert string date to js date
        
 
-        // if logg for today already exist update it otherwise make it.
+        // if logg for day already exist update it otherwise make it.
         const newLog = await prisma.loggs.upsert({
             where : {
                 userId_date : {userId , date : parsedDate}
@@ -27,6 +28,10 @@ export const logToday = async(req : Request , res : Response)=>{
             update: { rating, description },
             create: { userId, date: parsedDate, rating, description },
         })
+
+        const key = `loggs:${userId}:1`;
+        await deleteCache(key); // delete the cache for page 1 since we have updated the logg for today
+
 
         return res.status(201).json({
             todaysLogg : newLog
@@ -81,12 +86,38 @@ export const getHeatMap = async(req : Request , res : Response)=>{
 
 export const getLoggs = async(req : Request , res : Response)=>{
     try{
+        const page = Number(req.query.page) || 1;
+        const limit = Number(req.query.limit) || 7;
+        const skip = (page -1) * limit;
+         
         const userId = Number(req.user_id!);
+
+        const key = `loggs:${userId}:${page}`;
+        if(page === 1){
+            const cacheData = await getCache(key);
+            if(cacheData){
+                return res.status(200).json({
+                    loggs : cacheData
+                })
+            }
+        }
+
         const loggs = await prisma.loggs.findMany({
             where : {
                 userId : userId
-            }
+            },
+            orderBy : {
+                date : "desc",
+            },
+            skip : skip,
+            take : limit
         })
+
+        if(page === 1){
+            const cacheData = await setCache(key, loggs, 300); // cache for 5 minutess
+        }
+
+
         return res.status(200).json({
             loggs : loggs
         })
