@@ -49,6 +49,9 @@ const getCache = async(key : string)=>{
         }
         
         const cachData = await client.get(key);
+        if(cachData){
+            console.log("cache hit for key" , key);
+        }
         
         return cachData ? JSON.parse(cachData) : null
 

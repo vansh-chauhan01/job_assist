@@ -21,7 +21,8 @@ const limiter = rateLimit({
         })
     }
 })
-
+// Parse raw SDP payloads posted from the browser
+app.use(express.text({ type: ["application/sdp", "text/plain"] }));
 app.use(cookieParser());
 app.use(express.json())
 app.use(cors({
@@ -35,11 +36,13 @@ import userRouter from "./routers/user.routes.js"
 import jobRouter from "./routers/job.routes.js"
 import taskRouter from "./routers/tasks.routes.js"
 import loggRouter from "./routers/logg.routes.js"
+import aiRouter from "./routers/ai.routes.js"
 
 app.use("/api/v1/user/" , userRouter);
 app.use("/api/v1/job/" , jobRouter);
 app.use("/api/v1/task/" , taskRouter);
 app.use("/api/v1/logg/" , loggRouter);
+app.use("/api/v1/ai/" , aiRouter);
 
 
 app.get("/" , limiter , (req , res) =>{
@@ -54,11 +57,19 @@ async function startServer() {
         await prisma.$connect();
         console.log("database connected");
 
-        app.listen(8080 , async() =>{
-            console.log("server started")
-        })
+        app.listen(8080, () => {
+            console.log("server started");
+        });
         
-        await connectToRedis();
+
+        const redis = await connectToRedis();
+
+        if (redis) {
+            console.log("redis connected");
+        } else {
+            console.log("redis unavailable — continuing without cache");
+        }
+
         
 
         

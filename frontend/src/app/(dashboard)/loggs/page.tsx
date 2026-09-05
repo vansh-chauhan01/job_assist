@@ -9,7 +9,10 @@ import axios from "axios";
 export default function Loggs(){
 
 
-    const [loggs , setLoggs] = useState([])
+    const [loggs , setLoggs] = useState([]);
+    const [page , setPage] = useState(1);
+    const [limit , setLimit] = useState(7);
+    const [totalPages , setTotalPages] = useState(1);
 
     useEffect(()=>{
         const fetchLoggs = async()=>{

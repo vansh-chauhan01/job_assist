@@ -22,7 +22,7 @@ const navItems = [
     { label: "Applications", href: "/jobApplication", icon: Building2 },
     { label: "Tasks", href: "/tasks", icon: CheckSquare },
     { label: "Loggs", href: "/loggs", icon: NotepadText },
-    { label: "AI Assistant", href: "/assistant", icon: Sparkles },
+    { label: "AI Assistant", href: "/aiAssistant", icon: Sparkles },
 ];
 
 export default function DashboardLayout({
