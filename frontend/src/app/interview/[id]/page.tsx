@@ -1,58 +1,117 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import axios from "axios";
+
+type TranscriptEntry = {
+    role: "user" | "assistant";
+    text: string;
+};
 
 export default function Interview() {
-
     const audioRef = useRef<HTMLAudioElement>(null);
+    const pcRef = useRef<RTCPeerConnection | undefined>(undefined);
+    const streamRef = useRef<MediaStream | undefined>(undefined);
+    const { id } = useParams<{ id: string }>();
+    const router = useRouter();
+
+    const [transcript, setTranscript] = useState<TranscriptEntry[]>([]);
+    const [ending, setEnding] = useState(false);
 
     useEffect(() => {
-        try {
         (async () => {
-            // Create a peer connection
-            const pc = new RTCPeerConnection();
+            try {
+                const pc = new RTCPeerConnection();
+                pcRef.current = pc;
 
-            //Set up to play remote audio from the model
-            // audioRef.current = document.createElement("audio");
-            // audioRef.current.autoplay = true;
-            pc.ontrack = (e) => (audioRef.current!.srcObject = e.streams[0]!);
+                pc.ontrack = (e) => (audioRef.current!.srcObject = e.streams[0]!);
 
-            // Add local audio track for microphone input in the browser
-            const ms = await navigator.mediaDevices.getUserMedia({
-            audio: true,
-            });
-            pc.addTrack(ms.getTracks()[0]);
+                const localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                streamRef.current = localStream;
+                pc.addTrack(localStream.getTracks()[0]);
+                
+                // data chanel to script the interview
+                const dc = pc.createDataChannel("oai-events");
 
-            // Set up data channel for sending and receiving events
-            const dc = pc.createDataChannel("oai-events");
+                dc.addEventListener("message", (event) => {
+                    const data = JSON.parse(event.data);
 
-            // Start the session using the Session Description Protocol (SDP)
-            const offer = await pc.createOffer();
-            await pc.setLocalDescription(offer);
+                    if (data.type === "conversation.item.input_audio_transcription.completed") {
+                        setTranscript((prev) => [...prev, { role: "user", text: data.transcript }]);
+                    }
 
-            const sdpResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/ai/session`, {
-            method: "POST",
-            body: offer.sdp,
-            headers: {
-                "Content-Type": "application/sdp",
-            },
-            });
+                    if (data.type === "response.audio_transcript.done") {
+                        setTranscript((prev) => [...prev, { role: "assistant", text: data.transcript }]);
+                    }
+                });
 
-            const answer : RTCSessionDescriptionInit  = {
-            type: "answer",
-            sdp: await sdpResponse.text(),
-            };
-            await pc.setRemoteDescription(answer);
+                const offer = await pc.createOffer();
+                await pc.setLocalDescription(offer);
+
+                const sdpResponse = await fetch(
+                    `${process.env.NEXT_PUBLIC_BACKEND_URL}/ai/session?interviewId=${id}`,
+                    {
+                        method: "POST",
+                        body: offer.sdp,
+                        credentials: "include",
+                        headers: { "Content-Type": "application/sdp" },
+                    }
+                );
+
+                const answer: RTCSessionDescriptionInit = {
+                    type: "answer",
+                    sdp: await sdpResponse.text(),
+                };
+                await pc.setRemoteDescription(answer);
+            } catch (e) {
+                console.log("error in interview page", e);
+            }
         })();
-        } catch (e) {
-        console.log("error in interview page", e);
-        }
+
+        return () => {
+            pcRef.current?.close();
+            streamRef.current?.getTracks().forEach((track) => track.stop());
+        };
     }, []);
 
-  return(
-    <div>
-        <p>this is an interview page</p>
-         <audio ref={audioRef} autoPlay />
-    </div>
+    const handleEndInterview = async () => {
+        setEnding(true);
+        try {
+            //end p2p  live connection
+            pcRef.current?.close();
+            streamRef.current?.getTracks().forEach((track) => track.stop());
 
-  ) 
+            //save the transcript
+            const res = await axios.patch(
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}/ai/interview/${id}`,
+                { transcript },
+                { withCredentials: true }
+            );
+
+            router.push(`/interview/${id}/summary`); 
+        } catch (e) {
+            console.log("error ending interview", e);
+        } finally {
+            setEnding(false);
+        }
+    };
+
+    return (
+        <div>
+            <p>this is an interview page</p>
+            <audio ref={audioRef} autoPlay />
+
+            <button onClick={handleEndInterview} disabled={ending}>
+                {ending ? "Ending..." : "End Interview"}
+            </button>
+
+            <div>
+                {transcript.map((entry, i) => (
+                    <p key={i}>
+                        <strong>{entry.role === "user" ? "You" : "Interviewer"}:</strong> {entry.text}
+                    </p>
+                ))}
+            </div>
+        </div>
+    );
 }

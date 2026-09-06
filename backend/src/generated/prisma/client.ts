@@ -52,12 +52,22 @@ export type User = Prisma.UserModel
  */
 export type Loggs = Prisma.LoggsModel
 /**
- * Model Job
+ * Model job
  * 
  */
-export type Job = Prisma.JobModel
+export type job = Prisma.jobModel
 /**
  * Model Tasks
  * 
  */
 export type Tasks = Prisma.TasksModel
+/**
+ * Model Interviews
+ * 
+ */
+export type Interviews = Prisma.InterviewsModel
+/**
+ * Model resume
+ * 
+ */
+export type resume = Prisma.resumeModel

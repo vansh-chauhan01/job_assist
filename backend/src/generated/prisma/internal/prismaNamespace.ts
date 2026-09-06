@@ -399,8 +399,10 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   Loggs: 'Loggs',
-  Job: 'Job',
-  Tasks: 'Tasks'
+  job: 'job',
+  Tasks: 'Tasks',
+  Interviews: 'Interviews',
+  resume: 'resume'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -416,7 +418,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "loggs" | "job" | "tasks"
+    modelProps: "user" | "loggs" | "job" | "tasks" | "interviews" | "resume"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -568,76 +570,76 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Job: {
-      payload: Prisma.$JobPayload<ExtArgs>
-      fields: Prisma.JobFieldRefs
+    job: {
+      payload: Prisma.$jobPayload<ExtArgs>
+      fields: Prisma.jobFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.JobFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobPayload> | null
+          args: Prisma.jobFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$jobPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.JobFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobPayload>
+          args: Prisma.jobFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$jobPayload>
         }
         findFirst: {
-          args: Prisma.JobFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobPayload> | null
+          args: Prisma.jobFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$jobPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.JobFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobPayload>
+          args: Prisma.jobFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$jobPayload>
         }
         findMany: {
-          args: Prisma.JobFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobPayload>[]
+          args: Prisma.jobFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$jobPayload>[]
         }
         create: {
-          args: Prisma.JobCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobPayload>
+          args: Prisma.jobCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$jobPayload>
         }
         createMany: {
-          args: Prisma.JobCreateManyArgs<ExtArgs>
+          args: Prisma.jobCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.JobCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobPayload>[]
+          args: Prisma.jobCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$jobPayload>[]
         }
         delete: {
-          args: Prisma.JobDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobPayload>
+          args: Prisma.jobDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$jobPayload>
         }
         update: {
-          args: Prisma.JobUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobPayload>
+          args: Prisma.jobUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$jobPayload>
         }
         deleteMany: {
-          args: Prisma.JobDeleteManyArgs<ExtArgs>
+          args: Prisma.jobDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.JobUpdateManyArgs<ExtArgs>
+          args: Prisma.jobUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.JobUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobPayload>[]
+          args: Prisma.jobUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$jobPayload>[]
         }
         upsert: {
-          args: Prisma.JobUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobPayload>
+          args: Prisma.jobUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$jobPayload>
         }
         aggregate: {
           args: Prisma.JobAggregateArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.AggregateJob>
         }
         groupBy: {
-          args: Prisma.JobGroupByArgs<ExtArgs>
+          args: Prisma.jobGroupByArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.JobGroupByOutputType>[]
         }
         count: {
-          args: Prisma.JobCountArgs<ExtArgs>
+          args: Prisma.jobCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.JobCountAggregateOutputType> | number
         }
       }
@@ -713,6 +715,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.TasksCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.TasksCountAggregateOutputType> | number
+        }
+      }
+    }
+    Interviews: {
+      payload: Prisma.$InterviewsPayload<ExtArgs>
+      fields: Prisma.InterviewsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.InterviewsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InterviewsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.InterviewsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InterviewsPayload>
+        }
+        findFirst: {
+          args: Prisma.InterviewsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InterviewsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.InterviewsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InterviewsPayload>
+        }
+        findMany: {
+          args: Prisma.InterviewsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InterviewsPayload>[]
+        }
+        create: {
+          args: Prisma.InterviewsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InterviewsPayload>
+        }
+        createMany: {
+          args: Prisma.InterviewsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.InterviewsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InterviewsPayload>[]
+        }
+        delete: {
+          args: Prisma.InterviewsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InterviewsPayload>
+        }
+        update: {
+          args: Prisma.InterviewsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InterviewsPayload>
+        }
+        deleteMany: {
+          args: Prisma.InterviewsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.InterviewsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.InterviewsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InterviewsPayload>[]
+        }
+        upsert: {
+          args: Prisma.InterviewsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InterviewsPayload>
+        }
+        aggregate: {
+          args: Prisma.InterviewsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateInterviews>
+        }
+        groupBy: {
+          args: Prisma.InterviewsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InterviewsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.InterviewsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InterviewsCountAggregateOutputType> | number
+        }
+      }
+    }
+    resume: {
+      payload: Prisma.$resumePayload<ExtArgs>
+      fields: Prisma.resumeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.resumeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$resumePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.resumeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$resumePayload>
+        }
+        findFirst: {
+          args: Prisma.resumeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$resumePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.resumeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$resumePayload>
+        }
+        findMany: {
+          args: Prisma.resumeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$resumePayload>[]
+        }
+        create: {
+          args: Prisma.resumeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$resumePayload>
+        }
+        createMany: {
+          args: Prisma.resumeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.resumeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$resumePayload>[]
+        }
+        delete: {
+          args: Prisma.resumeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$resumePayload>
+        }
+        update: {
+          args: Prisma.resumeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$resumePayload>
+        }
+        deleteMany: {
+          args: Prisma.resumeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.resumeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.resumeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$resumePayload>[]
+        }
+        upsert: {
+          args: Prisma.resumeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$resumePayload>
+        }
+        aggregate: {
+          args: Prisma.ResumeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateResume>
+        }
+        groupBy: {
+          args: Prisma.resumeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ResumeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.resumeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ResumeCountAggregateOutputType> | number
         }
       }
     }
@@ -803,6 +953,29 @@ export const TasksScalarFieldEnum = {
 export type TasksScalarFieldEnum = (typeof TasksScalarFieldEnum)[keyof typeof TasksScalarFieldEnum]
 
 
+export const InterviewsScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  transcript: 'transcript',
+  resumeId: 'resumeId',
+  jobDescription: 'jobDescription',
+  createdAt: 'createdAt'
+} as const
+
+export type InterviewsScalarFieldEnum = (typeof InterviewsScalarFieldEnum)[keyof typeof InterviewsScalarFieldEnum]
+
+
+export const ResumeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  resumeUrl: 'resumeUrl',
+  parsedData: 'parsedData',
+  createdAt: 'createdAt'
+} as const
+
+export type ResumeScalarFieldEnum = (typeof ResumeScalarFieldEnum)[keyof typeof ResumeScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -811,12 +984,44 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
 
@@ -871,6 +1076,20 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -1040,8 +1259,10 @@ export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaC
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   loggs?: Prisma.LoggsOmit
-  job?: Prisma.JobOmit
+  job?: Prisma.jobOmit
   tasks?: Prisma.TasksOmit
+  interviews?: Prisma.InterviewsOmit
+  resume?: Prisma.resumeOmit
 }
 
 /* Types for Logging */

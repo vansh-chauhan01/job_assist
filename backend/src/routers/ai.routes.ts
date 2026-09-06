@@ -1,10 +1,15 @@
 import { Router } from "express";
-import { createSession } from "../controllers/ai.controller.js";
+import { createSession , resumeUpload , createInterview , saveTranscript } from "../controllers/ai.controller.js";
+import { verifyToken } from "../middleWares/isSignedIn.js";
+import { upload } from "../middleWares/multer.js";
 
 
 const router = Router();
 
 
-router.post("/session" , createSession);
+router.post("/session" , verifyToken , createSession);
+router.post("/resume" , verifyToken , upload.single('file') , resumeUpload);
+router.post("/interview" , verifyToken , createInterview);
+router.patch("/interview/:interviewId" , verifyToken , saveTranscript)
 
 export default router;
