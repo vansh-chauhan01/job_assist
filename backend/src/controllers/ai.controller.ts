@@ -2,9 +2,14 @@ import type { Request , Response } from "express";
 import { cloudinaryUpload } from "../services/cloudinary.js";
 import { PDFParse }  from "pdf-parse";
 import { prisma } from "../db_init.js";
+import { OpenAI } from "openai";
 
 
 
+
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+});
 
 
 export const createSession = async (req : Request , res : Response)=>{
@@ -64,15 +69,20 @@ export const createSession = async (req : Request , res : Response)=>{
         `;
 
 
-         const sessionConfig = JSON.stringify({
+        const sessionConfig = JSON.stringify({
             type: "realtime",
             model: "gpt-realtime-2.1-mini",
 
             instructions,
 
             audio: {
+                input: {
+                    transcription: {
+                        model: "gpt-4o-mini-transcribe",
+                    },
+                },
                 output: {
-                voice: "marin",
+                    voice: "marin",
                 },
             },
         });
@@ -153,6 +163,154 @@ export const saveTranscript = async (req: Request, res: Response) => {
         return res.status(500).json({ message: "Failed to save transcript", e });
     }
 };
+
+
+export const makeSummary = async(req : Request , res : Response)=>{
+    try{
+        const interviewId = req.query.interviewId as string
+        const interviewData = await prisma.interviews.findFirst({
+            where : {
+                id : Number(interviewId),
+                userId : Number(req.user_id)
+            },
+            select : {
+                transcript : true
+            }
+        })
+
+        console.log("transcript :", interviewData );
+
+        const response = await openai.responses.create({
+        model: "gpt-5-nano",
+
+        input: `
+            You are an expert technical interviewer evaluating a candidate
+            after a completed technical interview.
+
+            Analyze the interview transcript carefully.
+
+            Evaluate the candidate based ONLY on what they actually said.
+            Do not assume knowledge or skills that were not demonstrated.
+
+            Be fair and objective.
+
+            Interview transcript:
+            ${JSON.stringify(interviewData)}
+        `,
+
+        text: {
+            format: {
+                type: "json_schema",
+                name: "interview_evaluation",
+                strict: true,
+                schema: {
+                    type: "object",
+                    properties: {
+                        overallScore: {
+                            type: "number"
+                        },
+
+                        technicalKnowledge: {
+                            type: "number"
+                        },
+
+                        problemSolving: {
+                            type: "number"
+                        },
+
+                        communication: {
+                            type: "number"
+                        },
+
+                        summary: {
+                            type: "string"
+                        },
+
+                        strengths: {
+                            type: "array",
+                            items: {
+                                type: "string"
+                            }
+                        },
+
+                        weaknesses: {
+                            type: "array",
+                            items: {
+                                type: "string"
+                            }
+                        },
+
+                        poorAnswers: {
+                            type: "array",
+                            items: {
+                                type: "object",
+                                properties: {
+                                    question: {
+                                        type: "string"
+                                    },
+                                    candidateAnswer: {
+                                        type: "string"
+                                    },
+                                    assessment: {
+                                        type: "string"
+                                    },
+                                    improvement: {
+                                        type: "string"
+                                    }
+                                },
+                                required: [
+                                    "question",
+                                    "candidateAnswer",
+                                    "assessment",
+                                    "improvement"
+                                ],
+                                additionalProperties: false
+                            }
+                        },
+
+                        recommendations: {
+                            type: "array",
+                            items: {
+                                type: "string"
+                            }
+                        }
+                    },
+
+                    required: [
+                        "overallScore",
+                        "technicalKnowledge",
+                        "problemSolving",
+                        "communication",
+                        "summary",
+                        "strengths",
+                        "weaknesses",
+                        "poorAnswers",
+                        "recommendations"
+                    ],
+
+                    additionalProperties: false
+                }
+            }
+        }
+    });
+
+        //console.log(response);
+        const evaluation = JSON.parse(response.output_text);
+
+        return res.status(200).json({
+            summary : evaluation
+        })
+
+
+
+
+
+    }catch(e){
+
+    }
+     
+
+}
 
 
 export const resumeUpload = async (req : Request , res : Response)=>{

@@ -35,12 +35,13 @@ export default function Interview() {
 
                 dc.addEventListener("message", (event) => {
                     const data = JSON.parse(event.data);
+                    console.log(data.type);
 
                     if (data.type === "conversation.item.input_audio_transcription.completed") {
                         setTranscript((prev) => [...prev, { role: "user", text: data.transcript }]);
                     }
 
-                    if (data.type === "response.audio_transcript.done") {
+                    if (data.type === "response.output_audio_transcript.done") {
                         setTranscript((prev) => [...prev, { role: "assistant", text: data.transcript }]);
                     }
                 });
