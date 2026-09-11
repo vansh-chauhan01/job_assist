@@ -959,6 +959,7 @@ export const InterviewsScalarFieldEnum = {
   transcript: 'transcript',
   resumeId: 'resumeId',
   jobDescription: 'jobDescription',
+  summary: 'summary',
   createdAt: 'createdAt'
 } as const
 

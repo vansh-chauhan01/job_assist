@@ -71,6 +71,7 @@ model Interviews {
   resumeId     Int?
   resume       resume?   @relation(fields: [resumeId] , references: [id] , onDelete: SetNull)
   jobDescription String?
+  summary      Json?
   createdAt    DateTime  @default(now())
 }
 

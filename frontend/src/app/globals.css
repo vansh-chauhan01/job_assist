@@ -1,2 +1,10 @@
 @import "tailwindcss";
 
+@theme {
+  --font-typewriter: var(--font-typewriter), "Courier New", monospace;
+}
+
+/* Fallback utility class */
+.font-typewriter {
+  font-family: var(--font-typewriter), "Courier New", monospace;
+}

@@ -296,14 +296,20 @@ export const makeSummary = async(req : Request , res : Response)=>{
 
         //console.log(response);
         const evaluation = JSON.parse(response.output_text);
+        // save the evaluation in databse
+        const saveSummary = await prisma.interviews.update({
+            where : {
+                id : Number(interviewId),
+                userId : Number(req.user_id)
+            },
+            data : {
+                summary : evaluation
+            }
+        })
 
         return res.status(200).json({
             summary : evaluation
         })
-
-
-
-
 
     }catch(e){
 
