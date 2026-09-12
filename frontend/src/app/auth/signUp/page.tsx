@@ -14,8 +14,8 @@ export default function signUp(){
 
     const handleSubmit = async()=>{
         console.log(`${process.env.NEXT_PUBLIC_SITE_KEY!}`)
-        await axios.post("http://localhost:8080/api/v1/user/signup" , {username : userName, email : email , password : password , token : token})
-        router.push("/auth/signIn")
+        await axios.post("http://localhost:8080/api/v1/user/signup" , {username : userName, email : email , password : password , token : token} , { withCredentials : true})
+        router.push("/dashboard")
     }
 
     return <div>

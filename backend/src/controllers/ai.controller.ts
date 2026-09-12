@@ -345,4 +345,33 @@ export const resumeUpload = async (req : Request , res : Response)=>{
         res.status(500).json({ error: "Failed to upload resume" });
     }
 }
+
+
+export const getInterviews = async (req : Request , res : Response)=>{
+    try{
+        console.log(Number(req.user_id));
+        const interviews = await prisma.interviews.findMany({
+            where : {
+                userId : Number(req.user_id)
+            },
+            select : {
+                id : true,
+                transcript : true,
+                jobDescription : true,
+                summary : true,
+                createdAt : true
+            }
+        })
+
+
+        return res.status(200).json({
+            data : interviews
+        })
+    }catch(e){
+        return res.status(500).json({
+            error : e,
+            message : "couldnt fetch interview data"
+        })
+    }
+}
     

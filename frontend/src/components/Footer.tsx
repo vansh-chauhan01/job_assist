@@ -16,7 +16,7 @@ export default function Footer() {
             <Link href="/" className="flex items-center gap-2 group">
               <Target className="w-5 h-5 text-slate-900" />
               <span className="font-bold text-2xl text-slate-900 tracking-tight font-['Instrument_Serif',serif] italic">
-                JobAssist
+                Orbit
               </span>
             </Link>
             <p className="text-sm text-stone-600 max-w-sm">
@@ -72,7 +72,7 @@ export default function Footer() {
 
         {/* Bottom Copyright Section */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-500">
-          <p>© {new Date().getFullYear()} JobAssist. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Orbit. All rights reserved.</p>
           <p className="font-['Instrument_Serif',serif] italic text-sm text-stone-600">
             Created by Vansh Chauhan
           </p>

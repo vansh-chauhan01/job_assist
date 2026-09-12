@@ -19,7 +19,7 @@ export default function Hero() {
         {/* Hero Action Buttons */}
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
           <Link
-            href="/signup"
+            href="/auth/signUp"
             className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-xl bg-[#E9D5FF] text-[#4C1D95] border border-[#D8B4FE] font-semibold text-base hover:bg-[#DDD6FE] active:scale-[0.98] transition-all shadow-sm"
           >
             Get started for free

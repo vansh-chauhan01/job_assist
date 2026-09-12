@@ -12,7 +12,7 @@ export default function SignIn () {
 
     const handleSubmit = async()=>{
         const currUser = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/signin` , {username : userName , password : password} , { withCredentials : true});
-        router.push("/")
+        router.push("/dashboard")
     }
 
     return (

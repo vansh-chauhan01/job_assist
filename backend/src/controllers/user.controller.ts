@@ -61,8 +61,11 @@ export const signUp = async (req : Request , res : Response) =>{
             }
         })
 
-        return res.status(201).json({
-            message : "new user Created"
+        const Acesstoken = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET!);
+        return res.status(200).cookie("access_token" , Acesstoken, {
+            httpOnly : true,
+        }).json({
+            newUser
         })
     }catch(e){
         return res.status(401).json({

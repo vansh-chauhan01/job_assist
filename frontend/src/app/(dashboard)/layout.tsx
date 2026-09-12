@@ -14,6 +14,8 @@ import {
     Menu,
     X,
     NotepadText,
+    RotateCcwClock,
+    Rotate3d 
 } from "lucide-react";
 import axios from "axios";
 
@@ -22,7 +24,9 @@ const navItems = [
     { label: "Applications", href: "/jobApplication", icon: Building2 },
     { label: "Tasks", href: "/tasks", icon: CheckSquare },
     { label: "Loggs", href: "/loggs", icon: NotepadText },
+    { label: "History", href : "/history" , icon: RotateCcwClock },
     { label: "AI Assistant", href: "/aiAssistant", icon: Sparkles },
+    
 ];
 
 export default function DashboardLayout({
@@ -64,9 +68,9 @@ export default function DashboardLayout({
                 {/* Logo row + close button (close only shows on mobile) */}
                 <div className="mb-8 flex items-center justify-between px-2">
                     <div className="flex items-center gap-2 min-w-0">
-                        <div className="text-xl shrink-0">🎯</div>
+                        <div className="text-xl shrink-0"><Rotate3d /> </div>
                         <span className="truncate text-2xl font-semibold text-gray-900">
-                            JobAssist
+                            Orbit
                         </span>
                     </div>
                     <button
