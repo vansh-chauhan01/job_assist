@@ -8,7 +8,7 @@ Orbit helps you ace your job search with AI-powered mock interview practice, whi
 - **Applications** — Track every job application you've submitted, along with their status.
 - **Loggs** — Keep a log of activity and updates related to your job search.
 - **History** — Review past AI mock interviews, including the job description used, the full transcript, and an AI-generated summary with scores.
-- **AI Assistant** — Get AI-powered help throughout your job search workflow.
+- **AI Assistant** — Get AI-powered help throughout your job search workflow, from interview prep to application strategy
 
 ## Tech Stack
 
