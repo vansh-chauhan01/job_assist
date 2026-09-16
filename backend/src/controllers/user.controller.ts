@@ -3,8 +3,8 @@ import { signInSchema , signUpSchema } from "../zodSchema/user.zod.schema.js"
 import { prisma } from "../db_init.js"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
-import cloudfare from "../services/cloudfare.js"
-import { access } from "node:fs"
+
+
 
 export const signUp = async (req : Request , res : Response) =>{
 
@@ -16,27 +16,8 @@ export const signUp = async (req : Request , res : Response) =>{
                 message : parsedData.error.message
             })
         }
-        const {username , password , email , token} = parsedData.data;
-        // const formData = new FormData();
-        // formData.append("secret", process.env.CLOUD_SECRET_KEY!);
-        // formData.append("response", token);
-
-        // const result = await fetch(
-		// 	"https://challenges.cloudflare.com/turnstile/v0/siteverify",
-		// 	{
-		// 		method: "POST",
-		// 		body: formData,
-		// 	},
-		// );
-
-        // const notABot = (await result.json()).success;
-        const notABot = await cloudfare(token);
-
-        if(!notABot){
-            return res.status(409).json({
-                message : "you are a bot"
-            })
-        }
+        const {username , password , email } = parsedData.data;
+        
 
 
         const alreadyExsist = await prisma.user.findFirst({

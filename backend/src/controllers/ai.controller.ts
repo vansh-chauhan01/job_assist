@@ -165,159 +165,185 @@ export const saveTranscript = async (req: Request, res: Response) => {
 };
 
 
-export const makeSummary = async(req : Request , res : Response)=>{
-    try{
-        const interviewId = req.query.interviewId as string
-        const interviewData = await prisma.interviews.findFirst({
-            where : {
-                id : Number(interviewId),
-                userId : Number(req.user_id)
-            },
-            select : {
-                transcript : true
-            }
-        })
+export const makeSummary = async (req: Request, res: Response) => {
+    try {
+        const interviewId = req.query.interviewId as string;
 
-        console.log("transcript :", interviewData );
+        const interviewData = await prisma.interviews.findFirst({
+            where: {
+                id: Number(interviewId),
+                userId: Number(req.user_id)
+            },
+            select: {
+                transcript: true
+            }
+        });
+
+        if (!interviewData) {
+            return res.status(404).json({
+                error: "interview not found"
+            });
+        }
+
+        if (!interviewData.transcript) {
+            return res.status(400).json({
+                error: "no transcript available for this interview"
+            });
+        }
 
         const response = await openai.responses.create({
-        model: "gpt-5-nano",
+            model: "gpt-5-nano",
 
-        input: `
-            You are an expert technical interviewer evaluating a candidate
-            after a completed technical interview.
+            input: `
+                You are an expert technical interviewer evaluating a candidate
+                after a completed technical interview.
 
-            Analyze the interview transcript carefully.
+                Analyze the interview transcript carefully.
 
-            Evaluate the candidate based ONLY on what they actually said.
-            Do not assume knowledge or skills that were not demonstrated.
+                Evaluate the candidate based ONLY on what they actually said.
+                Do not assume knowledge or skills that were not demonstrated.
 
-            Be fair and objective.
+                Be fair and objective.
 
-            Interview transcript:
-            ${JSON.stringify(interviewData)}
-        `,
+                Score overallScore, technicalKnowledge, problemSolving, and communication
+                on an integer scale from 1 to 10, where:
+                - 1-4 means significant gaps or a poor showing
+                - 5-7 means an adequate, middle-of-the-road performance
+                - 8-10 means strong, well-demonstrated competence
+                Do not default to the middle of the range — use the full scale based on
+                the actual transcript content.
 
-        text: {
-            format: {
-                type: "json_schema",
-                name: "interview_evaluation",
-                strict: true,
-                schema: {
-                    type: "object",
-                    properties: {
-                        overallScore: {
-                            type: "number"
-                        },
+                Interview transcript:
+                ${interviewData.transcript}
+            `,
 
-                        technicalKnowledge: {
-                            type: "number"
-                        },
+            text: {
+                format: {
+                    type: "json_schema",
+                    name: "interview_evaluation",
+                    strict: true,
+                    schema: {
+                        type: "object",
+                        properties: {
+                            overallScore: {
+                                type: "integer",
+                                minimum: 1,
+                                maximum: 10
+                            },
 
-                        problemSolving: {
-                            type: "number"
-                        },
+                            technicalKnowledge: {
+                                type: "integer",
+                                minimum: 1,
+                                maximum: 10
+                            },
 
-                        communication: {
-                            type: "number"
-                        },
+                            problemSolving: {
+                                type: "integer",
+                                minimum: 1,
+                                maximum: 10
+                            },
 
-                        summary: {
-                            type: "string"
-                        },
+                            communication: {
+                                type: "integer",
+                                minimum: 1,
+                                maximum: 10
+                            },
 
-                        strengths: {
-                            type: "array",
-                            items: {
+                            summary: {
                                 type: "string"
+                            },
+
+                            strengths: {
+                                type: "array",
+                                items: {
+                                    type: "string"
+                                }
+                            },
+
+                            weaknesses: {
+                                type: "array",
+                                items: {
+                                    type: "string"
+                                }
+                            },
+
+                            poorAnswers: {
+                                type: "array",
+                                items: {
+                                    type: "object",
+                                    properties: {
+                                        question: {
+                                            type: "string"
+                                        },
+                                        candidateAnswer: {
+                                            type: "string"
+                                        },
+                                        assessment: {
+                                            type: "string"
+                                        },
+                                        improvement: {
+                                            type: "string"
+                                        }
+                                    },
+                                    required: [
+                                        "question",
+                                        "candidateAnswer",
+                                        "assessment",
+                                        "improvement"
+                                    ],
+                                    additionalProperties: false
+                                }
+                            },
+
+                            recommendations: {
+                                type: "array",
+                                items: {
+                                    type: "string"
+                                }
                             }
                         },
 
-                        weaknesses: {
-                            type: "array",
-                            items: {
-                                type: "string"
-                            }
-                        },
+                        required: [
+                            "overallScore",
+                            "technicalKnowledge",
+                            "problemSolving",
+                            "communication",
+                            "summary",
+                            "strengths",
+                            "weaknesses",
+                            "poorAnswers",
+                            "recommendations"
+                        ],
 
-                        poorAnswers: {
-                            type: "array",
-                            items: {
-                                type: "object",
-                                properties: {
-                                    question: {
-                                        type: "string"
-                                    },
-                                    candidateAnswer: {
-                                        type: "string"
-                                    },
-                                    assessment: {
-                                        type: "string"
-                                    },
-                                    improvement: {
-                                        type: "string"
-                                    }
-                                },
-                                required: [
-                                    "question",
-                                    "candidateAnswer",
-                                    "assessment",
-                                    "improvement"
-                                ],
-                                additionalProperties: false
-                            }
-                        },
-
-                        recommendations: {
-                            type: "array",
-                            items: {
-                                type: "string"
-                            }
-                        }
-                    },
-
-                    required: [
-                        "overallScore",
-                        "technicalKnowledge",
-                        "problemSolving",
-                        "communication",
-                        "summary",
-                        "strengths",
-                        "weaknesses",
-                        "poorAnswers",
-                        "recommendations"
-                    ],
-
-                    additionalProperties: false
+                        additionalProperties: false
+                    }
                 }
             }
-        }
-    });
+        });
 
-        //console.log(response);
         const evaluation = JSON.parse(response.output_text);
-        // save the evaluation in databse
-        const saveSummary = await prisma.interviews.update({
-            where : {
-                id : Number(interviewId),
-                userId : Number(req.user_id)
+
+        await prisma.interviews.update({
+            where: {
+                id: Number(interviewId),
+                userId: Number(req.user_id)
             },
-            data : {
-                summary : evaluation
+            data: {
+                summary: evaluation
             }
-        })
+        });
 
         return res.status(200).json({
-            summary : evaluation
-        })
+            summary: evaluation
+        });
 
-    }catch(e){
-
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({
+            error: "couldnt make summary for your interview"
+        });
     }
-     
-
-}
-
+};
 
 export const resumeUpload = async (req : Request , res : Response)=>{
     try{
