@@ -214,7 +214,7 @@ export const makeSummary = async (req: Request, res: Response) => {
                 the actual transcript content.
 
                 Interview transcript:
-                ${interviewData.transcript}
+                ${JSON.stringify(interviewData.transcript)}
             `,
 
             text: {

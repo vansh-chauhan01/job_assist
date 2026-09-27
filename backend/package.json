@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc -b",
+    "start": "prisma migrate deploy && node dist/index.js",
     "dev": "node dist/index.js"
   },
   "keywords": [],

@@ -125,7 +125,7 @@ export default function DashboardLayout({
                     <div className="flex items-center gap-2 min-w-0">
                         <div className="text-xl shrink-0">🎯</div>
                         <span className="truncate text-lg font-semibold text-gray-900">
-                            JobAssist
+                            Orbit
                         </span>
                     </div>
                     <button

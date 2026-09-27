@@ -10,7 +10,7 @@ const typewriter = Courier_Prime({
 });
 
 export const metadata: Metadata = {
-  title: "Job Assist",
+  title: "Orbit",
   description: "AI assisted job guidance",
 };
 

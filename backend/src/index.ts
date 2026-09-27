@@ -26,7 +26,11 @@ app.use(express.text({ type: ["application/sdp", "text/plain"] }));
 app.use(cookieParser());
 app.use(express.json())
 app.use(cors({
-    origin : ["http://localhost:3000"],
+    origin : [
+        "http://localhost:3000",
+        "http://localhost:5173",
+        process.env.FRONTEND_URL!
+    ],
     credentials : true
 }))
 
@@ -51,13 +55,14 @@ app.get("/" , limiter , (req , res) =>{
     })
 })
 
+const port = process.env.PORT || 8080;
 
 async function startServer() {
     try{
         await prisma.$connect();
         console.log("database connected");
 
-        app.listen(8080, () => {
+        app.listen(port, () => {
             console.log("server started");
         });
         

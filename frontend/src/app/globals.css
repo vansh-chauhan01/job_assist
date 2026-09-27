@@ -1,10 +1,23 @@
 @import "tailwindcss";
 
+
 @theme {
-  --font-typewriter: var(--font-typewriter), "Courier New", monospace;
+    --font-serif: var(--font-instrument-serif), serif;
+}
+/* @theme {
+    --font-serif: var(--font-instrument-serif), serif;
+    --font-typewriter: "Courier New", Courier, monospace;
 }
 
-/* Fallback utility class */
 .font-typewriter {
+    font-family: var(--font-typewriter);
+} */
+/* 
+@theme {
+  --font-typewriter: var(--font-typewriter), "Courier New", monospace;
+} */
+
+/* Fallback utility class */
+/* .font-typewriter {
   font-family: var(--font-typewriter), "Courier New", monospace;
-}
+} */
