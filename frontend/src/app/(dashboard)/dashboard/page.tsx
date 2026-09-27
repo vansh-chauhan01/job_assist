@@ -259,9 +259,9 @@ export default function dashBoard() {
                             <div className="text-[10px] sm:text-xs mb-1 text-gray-500">
                                 {monthLabel(monthKey)}
                             </div>
-                            <div className="flex gap-[2px] sm:gap-[3px]">
+                            <div className="flex gap-0.5 sm:gap-0.75">
                                 {weeks.map((week, wi) => (
-                                    <div key={wi} className="flex flex-col gap-[2px] sm:gap-[3px]">
+                                    <div key={wi} className="flex flex-col gap-0.5 sm:gap-0.75">
                                         {week.map((dateStr, di) => (
                                             <div
                                                 key={di}

@@ -30,7 +30,7 @@ app.use(cors({
         "http://localhost:3000",
         "http://localhost:5173",
         process.env.FRONTEND_URL!
-    ],
+    ].filter(boolean),
     credentials : true
 }))
 
@@ -41,6 +41,7 @@ import jobRouter from "./routers/job.routes.js"
 import taskRouter from "./routers/tasks.routes.js"
 import loggRouter from "./routers/logg.routes.js"
 import aiRouter from "./routers/ai.routes.js"
+import { boolean } from "zod";
 
 app.use("/api/v1/user/" , userRouter);
 app.use("/api/v1/job/" , jobRouter);
