@@ -45,6 +45,9 @@ export const signUp = async (req : Request , res : Response) =>{
         const Acesstoken = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET!);
         return res.status(200).cookie("access_token" , Acesstoken, {
             httpOnly : true,
+            secure: true,
+            sameSite: "none" as const,
+            path: "/",
         }).json({
             newUser
         })
@@ -91,6 +94,9 @@ export const signIn = async (req : Request , res : Response) =>{
         const token = jwt.sign({ userId: currUser.id }, process.env.JWT_SECRET!);
         return res.status(200).cookie("access_token" , token, {
             httpOnly : true,
+            secure: true,
+            sameSite: "none" as const,
+            path: "/",
         }).json({
             newUser
         })
